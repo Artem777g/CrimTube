@@ -49,9 +49,25 @@ final class InvidiousAPI {
 
     func search(_ query: String) async throws -> [VideoItem] {
         var components = URLComponents(string: instanceURL.absoluteString + "/api/v1/search")
-        components?.queryItems = [URLQueryItem(name: "q", value: query)]
+        components?.queryItems = [
+            URLQueryItem(name: "q", value: query),
+            URLQueryItem(name: "type", value: "video")
+        ]
         guard let url = components?.url else { throw APIError.badURL }
-        return try await request(url)
+
+        let data = try await data(for: url)
+        guard let array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            throw APIError.decoding
+        }
+        let videos = array.filter { ($0["type"] as? String) == "video" }
+        guard let filtered = try? JSONSerialization.data(withJSONObject: videos) else {
+            throw APIError.decoding
+        }
+        do {
+            return try JSONDecoder().decode([VideoItem].self, from: filtered)
+        } catch {
+            throw APIError.decoding
+        }
     }
 
     func video(id: String) async throws -> VideoDetails {
@@ -71,16 +87,21 @@ final class InvidiousAPI {
     }
 
     private func request<T: Decodable>(_ url: URL) async throws -> T {
+        let data = try await data(for: url)
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw APIError.decoding
+        }
+    }
+
+    private func data(for url: URL) async throws -> Data {
         var request = URLRequest(url: url)
         request.setValue("CrimTube-iOS/0.1", forHTTPHeaderField: "User-Agent")
         let (data, response) = try await session.data(for: request)
         if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
             throw APIError.http(http.statusCode)
         }
-        do {
-            return try JSONDecoder().decode(T.self, from: data)
-        } catch {
-            throw APIError.decoding
-        }
+        return data
     }
 }

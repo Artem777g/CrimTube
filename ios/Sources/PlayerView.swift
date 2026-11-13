@@ -5,11 +5,14 @@ import SwiftUI
 struct PlayerView: View {
     let item: VideoItem
 
+    @AppStorage("muxServer") private var muxServer = ""
+
     @ObservedObject private var watchLater = WatchLaterStore.shared
     @ObservedObject private var subscriptions = SubscriptionStore.shared
 
     @State private var details: VideoDetails?
     @State private var streams: [FormatStream] = []
+    @State private var serverHeights: [Int] = []
     @State private var selected: FormatStream?
     @State private var player: AVPlayer?
     @State private var error: String?
@@ -54,10 +57,17 @@ struct PlayerView: View {
                                 select(stream)
                             }
                         }
+                        if !muxServer.isEmpty {
+                            ForEach(serverHeights, id: \.self) { height in
+                                Button("\(height)p — через сервер") {
+                                    selectServer(height)
+                                }
+                            }
+                        }
                     } label: {
                         Label(selected?.qualityLabel ?? "Качество", systemImage: "4k.tv")
                     }
-                    .disabled(streams.isEmpty)
+                    .disabled(streams.isEmpty && (muxServer.isEmpty || serverHeights.isEmpty))
 
                     Button {
                         download()
@@ -126,10 +136,22 @@ struct PlayerView: View {
             details = loaded
             let usable = (loaded.formatStreams ?? []).filter { URL(string: $0.url) != nil }
             streams = usable.sorted { $0.height > $1.height }
-            guard let best = streams.first else {
+
+            var heights = Set<Int>()
+            for stream in (loaded.adaptiveFormats ?? []) where (stream.type ?? "").contains("video") {
+                if let label = stream.qualityLabel, let value = Int(label.prefix { $0.isNumber }) {
+                    heights.insert(value)
+                }
+            }
+            serverHeights = heights.sorted(by: >)
+
+            if let best = streams.first {
+                select(best)
+            } else if !muxServer.isEmpty, let height = serverHeights.first {
+                selectServer(height)
+            } else {
                 throw APIError.noStream
             }
-            select(best)
         } catch {
             self.error = (error as? LocalizedError)?.errorDescription ?? "Не удалось открыть видео."
         }
@@ -179,8 +201,26 @@ struct PlayerView: View {
         return Channel(authorId: authorId, author: details.author, authorThumbnails: details.authorThumbnails)
     }
 
+    private func selectServer(_ height: Int) {
+        var base = muxServer.trimmingCharacters(in: .whitespacesAndNewlines)
+        while base.hasSuffix("/") { base.removeLast() }
+        guard let url = URL(string: base + "/live/" + item.videoId + "?q=\(height)") else { return }
+        let stream = FormatStream(url: url.absoluteString, qualityLabel: "\(height)p", type: "video/mp4", itag: "server-\(height)")
+        select(stream)
+    }
+
     private func download() {
         guard let stream = selected else { return }
+        if let itag = stream.itag, itag.hasPrefix("server-") {
+            var base = muxServer.trimmingCharacters(in: .whitespacesAndNewlines)
+            while base.hasSuffix("/") { base.removeLast() }
+            if let url = URL(string: base + "/mux/" + item.videoId + "?q=\(stream.height)") {
+                let downloadStream = FormatStream(url: url.absoluteString, qualityLabel: stream.qualityLabel, type: "video/mp4", itag: "server-\(stream.height)")
+                DownloadManager.shared.download(item: item, stream: downloadStream)
+                downloadMessage = "Сервер склеивает файл. Смотрите вкладку «Загрузки»."
+                return
+            }
+        }
         DownloadManager.shared.download(item: item, stream: stream)
         downloadMessage = "Скачивание началось. Смотрите вкладку «Загрузки»."
     }
