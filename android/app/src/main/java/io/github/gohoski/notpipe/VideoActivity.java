@@ -61,6 +61,7 @@ import io.github.gohoski.notpipe.http.HttpClient;
 import io.github.gohoski.notpipe.playback.ManagerStreamProvider;
 import io.github.gohoski.notpipe.playback.PlayerController;
 import io.github.gohoski.notpipe.playback.StreamResolver;
+import io.github.gohoski.notpipe.ui.ErrorMessages;
 import io.github.gohoski.notpipe.ui.AdapterLinearLayout;
 import io.github.gohoski.notpipe.ui.AspectRatioVideoView;
 import io.github.gohoski.notpipe.ui.CommentAdapter;
@@ -753,7 +754,7 @@ public class VideoActivity extends Activity {
                             resolveStreamTask.execute(videoId);
                         } else {
                             restoreVideoUI();
-                            Toast.makeText(context, "Stream failed after multiple attempts.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.error_stream_failed, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -1510,7 +1511,7 @@ public class VideoActivity extends Activity {
                             resolveStreamTask.execute(videoId);
                         } else {
                             restoreVideoUI();
-                            Toast.makeText(context, "Video stream timed out after multiple attempts.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.error_stream_timeout, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -1938,7 +1939,7 @@ public class VideoActivity extends Activity {
      */
     private void showQualityDialog() {
         if (video == null) {
-            Toast.makeText(context, "Please wait for video to load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.error_wait_loading, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -2192,7 +2193,7 @@ public class VideoActivity extends Activity {
                     if (targetInstance != null) {
                         Manager.getInstance().removeDeadInstance(targetInstance);
                     }
-                    Toast.makeText(context, "All instances failed to provide video.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.error_all_instances, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, R.string.no_quality, Toast.LENGTH_SHORT).show();
                     /*resolvedQuality = "360";*/ videoBufferTimeout = 60000;
@@ -2212,12 +2213,12 @@ public class VideoActivity extends Activity {
                 updatePlaybackViaText(videoStream != null ? videoStream.getHost() : api.getHost());
 
                 if (errorMessage != null) {
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, ErrorMessages.playback(context, errorMessage), Toast.LENGTH_SHORT).show();
                 } else if (targetInstance != null) {
                     Manager.getInstance().removeDeadInstance(targetInstance);
-                    Toast.makeText(context, "Failed to connect to this instance.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.error_connect_instance, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Failed to fetch video URL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.error_fetch_url, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -2470,7 +2471,7 @@ public class VideoActivity extends Activity {
                     resolveStreamTask.execute(videoId);
                 } else {
                     restoreVideoUI();
-                    Toast.makeText(context, "Download failed after multiple attempts.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.error_download_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         }

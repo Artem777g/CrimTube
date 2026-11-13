@@ -79,8 +79,7 @@ namespace CrimTube.UWP
             }
             catch (Exception ex)
             {
-                ShowError("Не удалось открыть видео: " + ex.Message +
-                    "\n\nПубличные инстансы часто блокируются YouTube. Смените инстанс в настройках или используйте свой Invidious.");
+                ShowError(ErrorText.Open(ex.Message));
                 TitleText.Text = _videoId;
                 RetryButton.Visibility = Visibility.Visible;
             }
@@ -221,7 +220,7 @@ namespace CrimTube.UWP
             }
             catch (Exception ex)
             {
-                ShowError("Не удалось запустить воспроизведение: " + ex.Message);
+                ShowError(ErrorText.Playback(ex.Message));
                 RetryButton.Visibility = Visibility.Visible;
             }
         }
@@ -327,7 +326,7 @@ namespace CrimTube.UWP
             }
             catch (Exception ex)
             {
-                _dashStatus = ex.Message;
+                _dashStatus = ErrorText.Playback(ex.Message);
                 return null;
             }
         }
@@ -456,7 +455,7 @@ namespace CrimTube.UWP
         private void OnAudioFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
         {
             _audioReady = false;
-            ShowError("Аудиодорожка не декодируется: " + args.ErrorMessage);
+            ShowError("Аудиодорожка не декодируется. " + ErrorText.Playback(args.ErrorMessage));
         }
 
         private void OnVideoFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)

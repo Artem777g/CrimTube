@@ -442,6 +442,26 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
                     "SOFTWARE.");
             layout.addView(text);
 
+            final TextView contact = new TextView(this);
+            contact.setText(getString(R.string.contact_email, "artm.golovkov.00@inbox.ru"));
+            contact.setTextSize(15);
+            contact.setPadding(0, 12, 0, 0);
+            contact.setTextColor(0xFF4FC3F7);
+            contact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent mail = new Intent(Intent.ACTION_SENDTO,
+                                android.net.Uri.parse("mailto:artm.golovkov.00@inbox.ru"));
+                        startActivity(mail);
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, R.string.update_install_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            layout.addView(contact);
+
             ScrollView scrollView = new ScrollView(this);
             scrollView.addView(layout);
 

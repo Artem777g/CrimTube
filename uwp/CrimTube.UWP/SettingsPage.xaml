@@ -95,6 +95,10 @@
             <TextBlock Margin="0,18,0,0" FontSize="12" TextWrapping="Wrap"
                        Foreground="#FF777777"
                        Text="CrimTube для Windows 10 Mobile • 0.4.7 • WTFPL" />
+
+            <TextBlock Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap"
+                       Foreground="#FF777777"
+                       Text="Связаться: artm.golovkov.00@inbox.ru" />
         </StackPanel>
     </ScrollViewer>
 </Page>

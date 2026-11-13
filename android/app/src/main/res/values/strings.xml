@@ -223,4 +223,20 @@
     <string name="update_url_hint">https://raw.githubusercontent.com/OWNER/REPO/main/latest.json</string>
     <string name="update_saved">Saved</string>
     <string name="update_default_changelog">New version is available. Install it?</string>
+    <string name="error_stream_failed">Stream failed to load. Try another quality or instance.</string>
+    <string name="error_stream_timeout">The instance did not respond in time. Try another one.</string>
+    <string name="error_wait_loading">Wait for the video to load.</string>
+    <string name="error_all_instances">No instance could provide the video. Try again later or switch instance.</string>
+    <string name="error_connect_instance">Could not connect to the instance.</string>
+    <string name="error_fetch_url">Could not get the video URL.</string>
+    <string name="error_download_failed">Download failed.</string>
+    <string name="error_no_space">Not enough space on the memory card.</string>
+    <string name="error_network">No internet connection.</string>
+    <string name="error_instance_blocked">YouTube blocks this instance. Choose another one.</string>
+    <string name="error_instance_unavailable">Instance is unavailable. Try another one.</string>
+    <string name="error_video_unavailable">Video is unavailable.</string>
+    <string name="error_timeout">The instance did not respond in time. Try another one.</string>
+    <string name="error_tls">Secure connection failed. Try another instance.</string>
+    <string name="error_playback_generic">Could not play the video. Change quality or instance.</string>
+    <string name="contact_email">Contact: %s</string>
 </resources>

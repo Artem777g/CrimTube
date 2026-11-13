@@ -238,4 +238,20 @@
     <string name="update_url_hint">https://raw.githubusercontent.com/OWNER/REPO/main/latest.json</string>
     <string name="update_saved">Сохранено</string>
     <string name="update_default_changelog">Доступна новая версия. Установить?</string>
+    <string name="error_stream_failed">Поток не загрузился. Попробуйте другое качество или инстанс.</string>
+    <string name="error_stream_timeout">Инстанс не ответил вовремя. Попробуйте другой.</string>
+    <string name="error_wait_loading">Дождитесь загрузки видео.</string>
+    <string name="error_all_instances">Не удалось получить видео ни с одного инстанса. Попробуйте позже или смените инстанс.</string>
+    <string name="error_connect_instance">Не удалось подключиться к инстансу.</string>
+    <string name="error_fetch_url">Не удалось получить ссылку на видео.</string>
+    <string name="error_download_failed">Не удалось скачать файл.</string>
+    <string name="error_no_space">Недостаточно места на карте памяти.</string>
+    <string name="error_network">Нет подключения к интернету.</string>
+    <string name="error_instance_blocked">YouTube блокирует этот инстанс. Выберите другой.</string>
+    <string name="error_instance_unavailable">Инстанс недоступен. Попробуйте другой.</string>
+    <string name="error_video_unavailable">Видео недоступно.</string>
+    <string name="error_timeout">Инстанс не ответил вовремя. Попробуйте другой.</string>
+    <string name="error_tls">Ошибка защищённого соединения. Попробуйте другой инстанс.</string>
+    <string name="error_playback_generic">Не удалось воспроизвести видео. Смените качество или инстанс.</string>
+    <string name="contact_email">Связаться: %s</string>
 </resources>
