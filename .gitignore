@@ -24,3 +24,11 @@ cache/
 ffmpeg/
 __pycache__/
 *.pyc
+
+# iOS / Xcode
+ios/build/
+ios/*.xcodeproj/
+ios/*.xcworkspace/
+Payload/
+*.ipa
+DerivedData/
