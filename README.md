@@ -61,6 +61,21 @@ Windows 10 Mobile не умеет склеивать отдельные виде
 
 ## Автообновление
 
+### Android 4.1–4.4 и GitHub
+
+Старые Android не умеют TLS 1.2/SNI, поэтому `raw.githubusercontent.com`
+для них недоступен. Для таких устройств используйте HTTP-эндпоинт
+mux-сервера:
+
+```
+http://<IP-сервера>:8765/update/android.json
+```
+
+Файлы для него лежат в `uwp/server/update/` (`android.json` и APK).
+Поправьте в `android.json` IP сервера и версию APK.
+
+### GitHub и UWP
+
 `update/latest.json`:
 
 ```json

@@ -66,6 +66,19 @@ https://cdn.jsdelivr.net/gh/USER/REPO@main/update/latest.json
 - Android: меню → «Обновления» → вставить URL → «Проверить».
 - UWP: Настройки → «Обновления» → вставить URL → «Проверить обновления».
 
+### Важно для старого Android
+
+Android 4.1–4.4 не умеет TLS 1.2/SNI, поэтому GitHub по HTTPS у него
+не открывается. Для автообновления на планшете используйте HTTP-адрес
+mux-сервера:
+
+```
+http://<IP-сервера>:8765/update/android.json
+```
+
+В `uwp/server/update/android.json` укажите IP сервера и актуальный APK.
+UWP продолжает работать с GitHub.
+
 ## 4. Следующие версии
 
 1. Увеличь `versionCode` в `android/app/build.gradle`.

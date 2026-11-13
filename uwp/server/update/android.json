@@ -1,0 +1,7 @@
+{
+  "android": {
+    "versionCode": 32,
+    "url": "http://192.168.31.50:8765/update/CrimTube-0.3.1.apk",
+    "changelog": "CrimTube 0.3.1 с автообновлением."
+  }
+}

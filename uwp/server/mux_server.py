@@ -185,6 +185,20 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
+        if parsed.path.startswith("/update/"):
+            name = os.path.basename(parsed.path)
+            update_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "update", name)
+            if not os.path.exists(update_path):
+                self.send_error(404, "update file not found")
+                return
+            if name.endswith(".json"):
+                _serve_file(self, update_path, "application/json")
+            elif name.endswith(".apk"):
+                _serve_file(self, update_path, "application/vnd.android.package-archive")
+            else:
+                _serve_file(self, update_path)
+            return
+
         live = re.match(r"^/live/([A-Za-z0-9_-]{11})$", parsed.path)
         if live:
             query = urllib.parse.parse_qs(parsed.query)
@@ -252,7 +266,7 @@ class Handler(BaseHTTPRequestHandler):
                 remaining -= len(chunk)
 
 
-def _serve_file(handler, path):
+def _serve_file(handler, path, content_type="video/mp4"):
     size = os.path.getsize(path)
     range_header = handler.headers.get("Range")
     start = 0
@@ -272,7 +286,7 @@ def _serve_file(handler, path):
     with open(path, "rb") as file:
         file.seek(start)
         handler.send_response(status)
-        handler.send_header("Content-Type", "video/mp4")
+        handler.send_header("Content-Type", content_type)
         handler.send_header("Accept-Ranges", "bytes")
         handler.send_header("Content-Length", str(length))
         if status == 206:
@@ -304,7 +318,7 @@ def _serve_live(handler, video_id, height):
         return
 
     handler.send_response(200)
-    handler.send_header("Content-Type", "video/mp4")
+    handler.send_header("Content-Type", content_type)
     handler.send_header("Transfer-Encoding", "chunked")
     handler.send_header("Cache-Control", "no-store")
     handler.end_headers()
