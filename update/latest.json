@@ -1,12 +1,12 @@
 {
   "android": {
     "versionCode": 31,
-    "url": "https://github.com/USER/REPO/releases/download/v0.4.7/CrimTube-0.3.1.apk",
+    "url": "https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube-0.3.1.apk",
     "changelog": "CrimTube 0.3.1: загрузки, подписки, история, инстансы и автообновление."
   },
   "uwp": {
     "version": "0.4.7.0",
-    "url": "https://github.com/USER/REPO/releases/download/v0.4.7/CrimTube.UWP_0.4.7.0_ARM.appx",
+    "url": "https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube.UWP_0.4.7.0_ARM.appx",
     "changelog": "CrimTube 0.4.7 для Windows 10 Mobile: mux-сервер, 720p/1080p, автообновление."
   }
 }
