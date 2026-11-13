@@ -9,6 +9,8 @@ struct RootView: View {
                 .tabItem { Label("Поиск", systemImage: "magnifyingglass") }
             DownloadsView()
                 .tabItem { Label("Загрузки", systemImage: "arrow.down.circle") }
+            LibraryView()
+                .tabItem { Label("Библиотека", systemImage: "books.vertical") }
             SettingsView()
                 .tabItem { Label("Настройки", systemImage: "gearshape") }
         }

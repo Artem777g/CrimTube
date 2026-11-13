@@ -3,6 +3,7 @@ import SwiftUI
 
 struct DownloadsView: View {
     @ObservedObject private var manager = DownloadManager.shared
+    @State private var confirmDeleteAll = false
 
     var body: some View {
         NavigationView {
@@ -24,6 +25,18 @@ struct DownloadsView: View {
             }
             .listStyle(.plain)
             .navigationTitle("Загрузки")
+            .toolbar {
+                if !manager.items.isEmpty {
+                    Button(role: .destructive) {
+                        confirmDeleteAll = true
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                }
+            }
+            .confirmationDialog("Удалить все загрузки?", isPresented: $confirmDeleteAll) {
+                Button("Удалить все", role: .destructive) { manager.deleteAll() }
+            }
             .overlay {
                 if manager.items.isEmpty {
                     Text("Пока ничего не скачано")

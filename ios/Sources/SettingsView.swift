@@ -50,6 +50,7 @@ struct SettingsView: View {
                             Text(url).font(.caption)
                         }
                     }
+                    NavigationLink("Список инстансов с пингом", destination: InstancesView())
                     TextField("http://5.253.247.182:3000", text: $instance)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)

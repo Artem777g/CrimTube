@@ -10,6 +10,7 @@ struct VideoItem: Codable, Identifiable, Hashable {
     let videoId: String
     let title: String
     let author: String
+    let authorId: String?
     let lengthSeconds: Int?
     let videoThumbnails: [Thumbnail]?
 
@@ -52,7 +53,28 @@ struct VideoDetails: Codable {
     let videoId: String
     let title: String
     let author: String
+    let authorId: String?
+    let authorThumbnails: [Thumbnail]?
     let lengthSeconds: Int?
     let formatStreams: [FormatStream]?
     let adaptiveFormats: [FormatStream]?
+}
+
+
+struct Channel: Codable, Identifiable, Hashable {
+    let authorId: String
+    let author: String
+    let authorThumbnails: [Thumbnail]?
+
+    var id: String { authorId }
+
+    var thumbnailURL: URL? {
+        guard let thumbnails = authorThumbnails, !thumbnails.isEmpty else { return nil }
+        let best = thumbnails.max { ($0.width ?? 0) < ($1.width ?? 0) }
+        return URL(string: best?.url ?? thumbnails[0].url)
+    }
+}
+
+struct ChannelVideosResponse: Codable {
+    let videos: [VideoItem]?
 }

@@ -58,6 +58,11 @@ final class InvidiousAPI {
         try await get("/api/v1/videos/" + id + "?local=true")
     }
 
+    func channelVideos(id: String) async throws -> [VideoItem] {
+        let response: ChannelVideosResponse = try await get("/api/v1/channels/" + id + "/videos")
+        return response.videos ?? []
+    }
+
     private func get<T: Decodable>(_ path: String) async throws -> T {
         guard let url = URL(string: instanceURL.absoluteString + path) else {
             throw APIError.badURL

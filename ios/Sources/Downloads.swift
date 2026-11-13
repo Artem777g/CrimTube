@@ -37,7 +37,7 @@ final class DownloadManager: ObservableObject {
         documents.appendingPathComponent(item.fileName)
     }
 
-    func download(item: VideoItem, stream: FormatStream) {
+    func download(item: VideoItem, stream: FormatStream, fileExtension: String = "mp4") {
         guard !active.contains(item.videoId) else { return }
         guard let url = URL(string: stream.url) else { return }
 
@@ -51,7 +51,7 @@ final class DownloadManager: ObservableObject {
                     throw APIError.http(http.statusCode)
                 }
 
-                let fileName = item.videoId + ".mp4"
+                let fileName = item.videoId + "." + fileExtension
                 let destination = self.documents.appendingPathComponent(fileName)
                 try? self.fileManager.removeItem(at: destination)
                 try self.fileManager.moveItem(at: temporary, to: destination)
@@ -82,6 +82,14 @@ final class DownloadManager: ObservableObject {
     func delete(_ item: DownloadedVideo) {
         try? fileManager.removeItem(at: localURL(for: item))
         items.removeAll { $0.id == item.id }
+        save()
+    }
+
+    func deleteAll() {
+        for item in items {
+            try? fileManager.removeItem(at: localURL(for: item))
+        }
+        items.removeAll()
         save()
     }
 

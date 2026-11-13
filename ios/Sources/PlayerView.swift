@@ -1,8 +1,12 @@
+import AVFoundation
 import AVKit
 import SwiftUI
 
 struct PlayerView: View {
     let item: VideoItem
+
+    @ObservedObject private var watchLater = WatchLaterStore.shared
+    @ObservedObject private var subscriptions = SubscriptionStore.shared
 
     @State private var details: VideoDetails?
     @State private var streams: [FormatStream] = []
@@ -11,6 +15,7 @@ struct PlayerView: View {
     @State private var error: String?
     @State private var loading = true
     @State private var downloadMessage: String?
+    @State private var timeObserver: Any?
 
     var body: some View {
         ScrollView {
@@ -60,7 +65,35 @@ struct PlayerView: View {
                         Label("Скачать", systemImage: "arrow.down.circle")
                     }
                     .disabled(selected == nil || DownloadManager.shared.isDownloading(item.videoId))
+
+                    if let audio = audioStream {
+                        Button {
+                            DownloadManager.shared.download(item: item, stream: audio, fileExtension: "m4a")
+                            downloadMessage = "Аудио скачивается. Смотрите вкладку «Загрузки»."
+                        } label: {
+                            Label("Аудио", systemImage: "music.note")
+                        }
+                    }
                 }
+
+                HStack(spacing: 12) {
+                    Button {
+                        watchLater.toggle(item)
+                    } label: {
+                        Label(watchLater.contains(item) ? "В списке" : "Позже",
+                              systemImage: watchLater.contains(item) ? "clock.fill" : "clock")
+                    }
+
+                    if let channel = channel {
+                        Button {
+                            subscriptions.toggle(channel)
+                        } label: {
+                            Label(subscriptions.contains(channel) ? "Вы подписаны" : "Подписаться",
+                                  systemImage: subscriptions.contains(channel) ? "checkmark.circle.fill" : "person.badge.plus")
+                        }
+                    }
+                }
+                .font(.footnote)
 
                 if let message = downloadMessage {
                     Text(message)
@@ -79,7 +112,10 @@ struct PlayerView: View {
         .navigationTitle("Видео")
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }
-        .onDisappear { player?.pause() }
+        .onDisappear {
+            saveCurrent()
+            player?.pause()
+        }
     }
 
     private func load() async {
@@ -103,10 +139,44 @@ struct PlayerView: View {
     private func select(_ stream: FormatStream) {
         guard let url = URL(string: stream.url) else { return }
         selected = stream
+        saveCurrent()
         player?.pause()
+
         let newPlayer = AVPlayer(url: url)
+        let saved = HistoryStore.shared.position(for: item.videoId)
         player = newPlayer
+        if saved > 5 {
+            newPlayer.seek(to: CMTime(seconds: saved, preferredTimescale: 600))
+        }
         newPlayer.play()
+
+        timeObserver = newPlayer.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 5, preferredTimescale: 600),
+            queue: .main
+        ) { time in
+            HistoryStore.shared.record(video: item, position: time.seconds)
+        }
+    }
+
+    private func saveCurrent() {
+        guard let player = player else { return }
+        let seconds = player.currentTime().seconds
+        if seconds.isFinite {
+            HistoryStore.shared.record(video: item, position: seconds)
+        }
+        if let observer = timeObserver {
+            player.removeTimeObserver(observer)
+            timeObserver = nil
+        }
+    }
+
+    private var audioStream: FormatStream? {
+        details?.adaptiveFormats?.first { ($0.type ?? "").contains("audio") }
+    }
+
+    private var channel: Channel? {
+        guard let details = details, let authorId = details.authorId else { return nil }
+        return Channel(authorId: authorId, author: details.author, authorThumbnails: details.authorThumbnails)
     }
 
     private func download() {
