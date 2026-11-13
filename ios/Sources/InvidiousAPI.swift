@@ -27,7 +27,7 @@ enum APIError: LocalizedError {
 final class InvidiousAPI {
     static let shared = InvidiousAPI()
 
-    private let defaultInstance = "https://inv.nadeko.net"
+    private let defaultInstance = "http://5.253.247.182:3000"
     private let session: URLSession
 
     private init() {
