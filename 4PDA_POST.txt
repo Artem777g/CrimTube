@@ -1,0 +1,106 @@
+[center][size=6][b]CrimTube[/b][/size]
+[size=4]YouTube-клиент для старых Android и Windows 10 Mobile[/size]
+[size=3]Версия 0.3.1 (Android) / 0.4.7 (Windows 10 Mobile)[/size][/center]
+
+[hr]
+
+[b]CrimTube[/b] — неофициальный клиент YouTube для устройств, которые уже не тянут современные приложения. Работает через публичные инстансы Invidious/Piped/yt2009, поэтому не требует Google-сервисов и свежей версии Android.
+
+Поддерживаются две платформы:
+[list]
+[*][b]Android 1.5+[/b] — APK, без Google Play;
+[*][b]Windows 10 Mobile[/b] — ARM APPX, установка через режим разработчика.
+[/list]
+
+[hr]
+
+[spoiler=Возможности]
+[list]
+[*]Популярное, поиск, каналы.
+[*]Локальные подписки и лента подписок (параллельная загрузка).
+[*]«Смотреть позже» и история просмотров.
+[*]Продолжение просмотра с места остановки.
+[*]Встроенный плеер и выбор качества.
+[*]Скачивание видео/аудио: очередь, уведомление, отмена, повторные попытки.
+[*]Экран «Загрузки»: сортировка, фильтр, удаление, открытие во встроенном плеере.
+[*]Экран «Инстансы»: задержка, ошибки, пинг всех адресов.
+[*]Поиск по каналу.
+[*]Тёмный интерфейс, иконка CrimTube.
+[/list]
+[/spoiler]
+
+[spoiler=Скриншоты]
+[img]https://raw.githubusercontent.com/Artem777g/CrimTube/main/docs/4pda-main.png[/img]
+[img]https://raw.githubusercontent.com/Artem777g/CrimTube/main/docs/4pda-menu.png[/img]
+[img]https://raw.githubusercontent.com/Artem777g/CrimTube/main/docs/4pda-instances.png[/img]
+[/spoiler]
+
+[spoiler=Установка Android]
+[list=1]
+[*]Скачайте [b]CrimTube-0.3.1.apk[/b].
+[*]Разрешите установку из неизвестных источников.
+[*]Установите APK.
+[/list]
+Приложение не в Google Play. Для автообновления можно указать URL манифеста в меню «Обновления».
+[/spoiler]
+
+[spoiler=Установка Windows 10 Mobile]
+[list=1]
+[*]Включите режим разработчика.
+[*]Установите сертификат [b]CrimTube.UWP.cer[/b] в «Доверенные люди».
+[*]Поставьте зависимости из [b]CrimTube.UWP-dependencies-ARM.zip[/b].
+[*]Установите [b]CrimTube.UWP_0.4.7.0_ARM.appx[/b] через Device Portal или WinAppDeployCmd.
+[/list]
+[/spoiler]
+
+[spoiler=Про 720p/1080p на Windows 10 Mobile]
+W10M не умеет склеивать отдельные видео- и аудиодорожки, поэтому высокие качества идут через mux-сервер на ПК: он собирает готовый MP4. Инструкция и скрипт — в репозитории, папка [b]uwp/server[/b].
+[/spoiler]
+
+[hr]
+
+[b]Скачать[/b]
+
+[list]
+[*][b]Android APK:[/b] [url=https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube-0.3.1.apk]CrimTube-0.3.1.apk[/url]
+[*][b]Windows 10 Mobile APPX:[/b] [url=https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube.UWP_0.4.7.0_ARM.appx]CrimTube.UWP_0.4.7.0_ARM.appx[/url]
+[*][b]Зависимости W10M:[/b] [url=https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube.UWP-dependencies-ARM.zip]CrimTube.UWP-dependencies-ARM.zip[/url]
+[*][b]Сертификат:[/b] [url=https://github.com/Artem777g/CrimTube/releases/download/v0.4.7/CrimTube.UWP.cer]CrimTube.UWP.cer[/url]
+[*][b]Все файлы и контрольные суммы:[/b] [url=https://github.com/Artem777g/CrimTube/releases/tag/v0.4.7]GitHub Releases[/url]
+[/list]
+
+[hr]
+
+[spoiler=Что нового]
+[b]0.3.1 (Android, versionCode 31)[/b]
+[list]
+[*]Автообновление через latest.json.
+[*]Загрузки: очередь, сортировка, фильтр, очистка битых файлов.
+[*]Подписки, «Смотреть позже», история, продолжение просмотра.
+[*]Экран «Инстансы», поиск по каналу.
+[/list]
+
+[b]0.4.7 (Windows 10 Mobile)[/b]
+[list]
+[*]Клиент Invidious/Piped с перебором инстансов.
+[*]Выбор качества, mux-сервер для 720p/1080p.
+[*]Проверка обновлений.
+[/list]
+[/spoiler]
+
+[hr]
+
+[spoiler=Известные ограничения]
+[list]
+[*]Публичные инстансы периодически блокируются YouTube — помогает смена инстанса или свой сервер.
+[*]На старых Android (4.1–4.4) автообновление через GitHub не работает из-за TLS; используйте HTTP-манифест со своего сервера.
+[*]Windows 10 Mobile не устанавливает APPX молча — только через подтверждение.
+[/list]
+[/spoiler]
+
+[hr]
+
+[b]Исходный код:[/b] [url=https://github.com/Artem777g/CrimTube]github.com/Artem777g/CrimTube[/url]
+[b]Лицензия:[/b] WTFPL (NNJSON — MIT).
+
+Проект не связан с YouTube/Google. Все права на контент принадлежат правообладателям.
