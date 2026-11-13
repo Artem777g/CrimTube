@@ -6,12 +6,13 @@ YouTube-клиент для старых Android и Windows 10 Mobile. Рабо�
 
 ![Иконка](docs/icon.png)
 
-## Две версии
+## Три версии
 
 | Платформа | Файл | Версия |
 | --- | --- | --- |
-| Android (API 3+) | `CrimTube-0.3.1.apk` | 0.3.1, versionCode 31 |
-| Windows 10 Mobile (ARM) | `CrimTube.UWP_0.4.7.0_ARM.appx` | 0.4.7.0 |
+| Android (API 3+) | `CrimTube-0.3.1.apk` | 0.3.1, versionCode 33 |
+| Windows 10 Mobile (ARM) | `CrimTube.UWP_0.4.8.0_ARM.appx` | 0.4.8.0 |
+| iOS 15+ (AltStore) | `CrimTube.ipa` | 0.1.0 |
 
 Обе версии лежат в разделе [Releases](../../releases). Там же:
 `CrimTube.UWP-dependencies-ARM.zip` (framework-пакеты для W10M),
@@ -48,6 +49,14 @@ URL `latest.json` (см. ниже).
 Автообновление UWP: Настройки → «Обновления» → `latest.json`.
 Приложение скачает APPX и откроет установщик; тихая установка в UWP
 невозможна.
+
+## iOS (AltStore)
+
+iOS-версия собирается в GitHub Actions и ставится через AltStore с бесплатным
+Apple ID; App Store не требуется. Инструкция — [`ios/ALTSTORE.md`](ios/ALTSTORE.md).
+
+Кратко: Actions → **iOS IPA** → Run workflow → скачать `CrimTube.ipa` →
+AltStore → My Apps → **+** → выбрать IPA.
 
 ## Свой mux-сервер (для 720p/1080p)
 

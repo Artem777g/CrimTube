@@ -1,0 +1,42 @@
+name: CrimTube
+options:
+  bundleIdPrefix: com.crimtube
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+
+targets:
+  CrimTube:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+        excludes:
+          - "Info.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crimtube.app
+        PRODUCT_NAME: CrimTube
+        INFOPLIST_FILE: Sources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGNING_ALLOWED: "NO"
+        CODE_SIGNING_REQUIRED: "NO"
+        CODE_SIGN_IDENTITY: ""
+        ENABLE_BITCODE: "NO"
+        SUPPORTS_MACCATALYST: "NO"
+
+schemes:
+  CrimTube:
+    build:
+      targets:
+        CrimTube: all
+    run:
+      config: Debug
+    archive:
+      config: Release

@@ -1,0 +1,64 @@
+import AVKit
+import SwiftUI
+
+struct DownloadsView: View {
+    @ObservedObject private var manager = DownloadManager.shared
+
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(manager.items) { item in
+                    NavigationLink(destination: OfflinePlayerView(download: item)) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(item.title).font(.system(size: 15, weight: .semibold))
+                            Text(item.author).font(.caption).foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        manager.delete(manager.items[index])
+                    }
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("Загрузки")
+            .overlay {
+                if manager.items.isEmpty {
+                    Text("Пока ничего не скачано")
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .navigationViewStyle(.stack)
+    }
+}
+
+struct OfflinePlayerView: View {
+    let download: DownloadedVideo
+    @State private var player: AVPlayer
+
+    init(download: DownloadedVideo) {
+        self.download = download
+        let url = DownloadManager.shared.localURL(for: download)
+        _player = State(initialValue: AVPlayer(url: url))
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VideoPlayer(player: player)
+                .frame(height: 230)
+                .background(Color.black)
+                .cornerRadius(8)
+            Text(download.title).font(.headline)
+            Text(download.author).font(.subheadline).foregroundColor(.secondary)
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Офлайн")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear { player.play() }
+        .onDisappear { player.pause() }
+    }
+}
