@@ -165,6 +165,8 @@ struct PlayerView: View {
         player?.pause()
 
         let newPlayer = AVPlayer(url: url)
+        newPlayer.isMuted = false
+        newPlayer.volume = 1.0
         let saved = HistoryStore.shared.position(for: item.videoId)
         player = newPlayer
         if saved > 5 {

@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 
 struct RootView: View {
@@ -20,6 +21,10 @@ struct RootView: View {
 
 @main
 struct CrimTubeApp: App {
+    init() {
+        AudioSession.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()

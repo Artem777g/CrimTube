@@ -55,7 +55,10 @@ struct OfflinePlayerView: View {
     init(download: DownloadedVideo) {
         self.download = download
         let url = DownloadManager.shared.localURL(for: download)
-        _player = State(initialValue: AVPlayer(url: url))
+        let player = AVPlayer(url: url)
+        player.isMuted = false
+        player.volume = 1.0
+        _player = State(initialValue: player)
     }
 
     var body: some View {
