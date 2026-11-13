@@ -419,7 +419,10 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
             layout.addView(imageView);
 
             final TextView text = new TextView(this);
-            text.setText(getString(R.string.about_) + "\n\nMIT License\n" +
+            text.setText(getString(R.string.about_));
+
+            final TextView license = new TextView(this);
+            license.setText("\n\nMIT License\n" +
                     "\n" +
                     "Copyright (c) 2021-2025 Arman Jussupgaliyev\n" +
                     "\n" +
@@ -440,6 +443,7 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
                     "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
                     "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
                     "SOFTWARE.");
+            license.setTextSize(12);
             layout.addView(text);
 
             final TextView contact = new TextView(this);
@@ -461,6 +465,7 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
                 }
             });
             layout.addView(contact);
+            layout.addView(license);
 
             ScrollView scrollView = new ScrollView(this);
             scrollView.addView(layout);
