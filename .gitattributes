@@ -1,0 +1,9 @@
+* text=auto
+*.png binary
+*.jpg binary
+*.ico binary
+*.apk binary
+*.appx binary
+*.pfx binary
+*.keystore binary
+*.zip binary

@@ -1,0 +1,26 @@
+# Сборки и артефакты
+dist/
+build/
+app/build/
+.gradle/
+*.apk
+*.aab
+*.appx
+*.appxbundle
+AppPackages/
+bin/
+obj/
+.vs/
+cache/
+
+# Секреты и подписи
+*.pfx
+*.keystore
+*.cer
+
+# Временное
+*.log
+*.part
+ffmpeg/
+__pycache__/
+*.pyc

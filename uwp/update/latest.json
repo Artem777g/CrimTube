@@ -1,0 +1,12 @@
+{
+  "android": {
+    "versionCode": 31,
+    "url": "https://github.com/USER/REPO/releases/download/v0.3.1/CrimTube-0.3.1.apk",
+    "changelog": "Автообновление, mux-сервер, выбор качества."
+  },
+  "uwp": {
+    "version": "0.4.7.0",
+    "url": "https://github.com/USER/REPO/releases/download/v0.4.7/CrimTube.UWP_0.4.7.0_ARM.appx",
+    "changelog": "Автообновление и проверка обновлений в настройках."
+  }
+}
