@@ -1186,6 +1186,34 @@ public class VideoActivity extends Activity {
             }
         });
         player.attach(videoView);
+        videoView.setFocusable(true);
+        videoView.setOnKeyListener(new android.view.View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, android.view.KeyEvent event) {
+                if (event.getAction() != android.view.KeyEvent.ACTION_DOWN) {
+                    return false;
+                }
+                if (keyCode == android.view.KeyEvent.KEYCODE_DPAD_CENTER
+                        || keyCode == android.view.KeyEvent.KEYCODE_ENTER
+                        || keyCode == android.view.KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+                    if (videoView.isPlaying()) {
+                        videoView.pause();
+                    } else {
+                        videoView.start();
+                    }
+                    return true;
+                }
+                if (keyCode == android.view.KeyEvent.KEYCODE_DPAD_LEFT) {
+                    videoView.seekTo(Math.max(0, videoView.getCurrentPosition() - 10000));
+                    return true;
+                }
+                if (keyCode == android.view.KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    videoView.seekTo(videoView.getCurrentPosition() + 10000);
+                    return true;
+                }
+                return false;
+            }
+        });
         videoLayout = (LinearLayout) findViewById(R.id.video_layout);
         videoFrame = (FrameLayout) findViewById(R.id.video_frame);
         thumbnail = (ImageView) findViewById(R.id.thumbnail);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tv_query"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#151515"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp" />
+
+    <GridView
+        android:id="@+id/tv_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:numColumns="7"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="8dp"
+        android:stretchMode="columnWidth"
+        android:listSelector="@android:color/transparent" />
+
+    <Button
+        android:id="@+id/tv_search_go"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/tv_search"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/tv_button_bg"
+        android:focusable="true" />
+</LinearLayout>

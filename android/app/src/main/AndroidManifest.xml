@@ -30,6 +30,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".TvSearchActivity"
+            android:label="@string/tv_search"
+            android:theme="@style/TvTheme"
+            android:screenOrientation="landscape"
+            android:exported="false" />
+        <activity
             android:label="@string/app_name"
             android:name="io.github.gohoski.notpipe.MainActivity"
             android:configChanges="keyboardHidden">

@@ -58,11 +58,18 @@ public class TvMainActivity extends Activity {
         Button subscriptions = (Button) findViewById(R.id.tv_subscriptions);
         Button history = (Button) findViewById(R.id.tv_history);
         Button downloads = (Button) findViewById(R.id.tv_downloads);
+        Button settings = (Button) findViewById(R.id.tv_settings);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSearchDialog();
+                startActivityForResult(new Intent(TvMainActivity.this, TvSearchActivity.class), 1);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TvMainActivity.this, SettingsActivity.class));
             }
         });
         subscriptions.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +93,19 @@ public class TvMainActivity extends Activity {
 
         loadPopular();
         search.requestFocus();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            String query = data.getStringExtra("query");
+            if (query != null && query.trim().length() > 0) {
+                loading.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.GONE);
+                new SearchTask().execute(query);
+            }
+        }
     }
 
     private void loadPopular() {
