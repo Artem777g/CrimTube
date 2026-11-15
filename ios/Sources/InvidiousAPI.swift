@@ -97,6 +97,11 @@ final class InvidiousAPI {
         }
     }
 
+    func comments(videoId: String) async throws -> [Comment] {
+        let response: CommentsResponse = try await get("/api/v1/comments/" + videoId)
+        return response.comments ?? []
+    }
+
     func channelVideos(id: String) async throws -> [VideoItem] {
         let response: ChannelVideosResponse = try await get("/api/v1/channels/" + id + "/videos")
         return response.videos ?? []

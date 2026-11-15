@@ -14,6 +14,7 @@ struct LibraryView: View {
                     Text("История").tag(0)
                     Text("Позже").tag(1)
                     Text("Подписки").tag(2)
+                    Text("Лента").tag(3)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
@@ -22,8 +23,10 @@ struct LibraryView: View {
                     historyList
                 } else if section == 1 {
                     watchLaterList
-                } else {
+                } else if section == 2 {
                     subscriptionsList
+                } else {
+                    SubscriptionFeedView(subscriptions: subscriptions)
                 }
             }
             .navigationTitle("Библиотека")
@@ -160,6 +163,55 @@ struct ChannelView: View {
         } catch {
             self.error = (error as? LocalizedError)?.errorDescription ?? "Не удалось загрузить канал."
         }
+        loading = false
+    }
+}
+
+
+struct SubscriptionFeedView: View {
+    @ObservedObject var subscriptions: SubscriptionStore
+
+    @State private var items: [VideoItem] = []
+    @State private var loading = false
+    @State private var error: String?
+
+    var body: some View {
+        List {
+            ForEach(items) { item in
+                NavigationLink(destination: PlayerView(item: item)) {
+                    VideoRow(item: item)
+                }
+            }
+        }
+        .listStyle(.plain)
+        .overlay {
+            if loading && items.isEmpty {
+                ProgressView("Загрузка ленты…")
+            } else if let error = error, items.isEmpty {
+                Text(error).multilineTextAlignment(.center).padding()
+            } else if items.isEmpty {
+                Text("Подписки пусты — подпишитесь на канал в видео.").foregroundColor(.secondary).padding()
+            }
+        }
+        .task { await load() }
+    }
+
+    private func load() async {
+        guard !subscriptions.items.isEmpty else { return }
+        loading = true
+        error = nil
+        var all: [VideoItem] = []
+        await withTaskGroup(of: [VideoItem].self) { group in
+            for channel in subscriptions.items {
+                group.addTask {
+                    (try? await InvidiousAPI.shared.channelVideos(id: channel.authorId)) ?? []
+                }
+            }
+            for await videos in group {
+                all.append(contentsOf: videos)
+            }
+        }
+        items = Array(all.sorted { ($0.published ?? 0) > ($1.published ?? 0) }.prefix(60))
         loading = false
     }
 }

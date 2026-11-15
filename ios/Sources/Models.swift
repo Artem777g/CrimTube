@@ -12,6 +12,7 @@ struct VideoItem: Codable, Identifiable, Hashable {
     let author: String
     let authorId: String?
     let lengthSeconds: Int?
+    let published: Int?
     let videoThumbnails: [Thumbnail]?
 
     var id: String { videoId }
@@ -77,4 +78,22 @@ struct Channel: Codable, Identifiable, Hashable {
 
 struct ChannelVideosResponse: Codable {
     let videos: [VideoItem]?
+}
+
+
+struct CommentsResponse: Codable {
+    let comments: [Comment]?
+}
+
+struct Comment: Codable {
+    let author: String
+    let content: String
+    let likeCount: Int?
+    let publishedText: String?
+    let authorThumbnails: [Thumbnail]?
+
+    var avatarURL: URL? {
+        guard let thumbnails = authorThumbnails, !thumbnails.isEmpty else { return nil }
+        return URL(string: thumbnails[0].url)
+    }
 }

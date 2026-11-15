@@ -20,6 +20,8 @@ struct PlayerView: View {
     @State private var downloadMessage: String?
     @State private var timeObserver: Any?
     @State private var fullscreen = false
+    @State private var comments: [Comment] = []
+    @State private var speed: Double = 1.0
 
     var body: some View {
         ScrollView {
@@ -105,6 +107,14 @@ struct PlayerView: View {
                             Label("Аудио", systemImage: "music.note")
                         }
                     }
+
+                    Menu {
+                        ForEach([0.5, 0.75, 1.0, 1.25, 1.5, 2.0], id: \.self) { value in
+                            Button(speedLabel(value)) { setSpeed(value) }
+                        }
+                    } label: {
+                        Label(speedLabel(speed), systemImage: "speedometer")
+                    }
                 }
 
                 HStack(spacing: 12) {
@@ -137,6 +147,24 @@ struct PlayerView: View {
                         .font(.footnote)
                         .foregroundColor(.orange)
                 }
+
+                if !comments.isEmpty {
+                    Divider()
+                    Text("Комментарии").font(.headline)
+                    ForEach(Array(comments.prefix(10).enumerated()), id: \.offset) { _, comment in
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack {
+                                Text(comment.author).font(.caption).bold()
+                                Spacer()
+                                if let likes = comment.likeCount, likes > 0 {
+                                    Text("\(likes) ♥").font(.caption2).foregroundColor(.secondary)
+                                }
+                            }
+                            Text(comment.content).font(.footnote).lineLimit(4)
+                        }
+                        .padding(.vertical, 2)
+                    }
+                }
             }
             .padding()
         }
@@ -160,6 +188,7 @@ struct PlayerView: View {
         do {
             let loaded = try await InvidiousAPI.shared.video(id: item.videoId)
             details = loaded
+            comments = (try? await InvidiousAPI.shared.comments(videoId: item.videoId)) ?? []
             let usable = (loaded.formatStreams ?? []).filter { URL(string: $0.url) != nil }
             streams = usable.sorted { $0.height > $1.height }
 
@@ -199,6 +228,7 @@ struct PlayerView: View {
             newPlayer.seek(to: CMTime(seconds: saved, preferredTimescale: 600))
         }
         newPlayer.play()
+        newPlayer.rate = Float(speed)
 
         timeObserver = newPlayer.addPeriodicTimeObserver(
             forInterval: CMTime(seconds: 5, preferredTimescale: 600),
@@ -206,6 +236,18 @@ struct PlayerView: View {
         ) { time in
             HistoryStore.shared.record(video: item, position: time.seconds)
         }
+    }
+
+    private func setSpeed(_ value: Double) {
+        speed = value
+        if let player = player, player.timeControlStatus == .playing {
+            player.rate = Float(value)
+        }
+    }
+
+    private func speedLabel(_ value: Double) -> String {
+        if value == 1.0 { return "1×" }
+        return String(format: "%.2g×", value)
     }
 
     private func saveCurrent() {

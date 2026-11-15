@@ -75,7 +75,7 @@ struct SettingsView: View {
                     HStack {
                         Text("Версия")
                         Spacer()
-                        Text("0.1.4").foregroundColor(.secondary)
+                        Text("0.1.5").foregroundColor(.secondary)
                     }
                     Text("CrimTube для iOS. Сделано для AltStore/сайдлоада.")
                         .font(.footnote)
