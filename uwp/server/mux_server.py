@@ -17,6 +17,8 @@ import re
 import subprocess
 import threading
 import time
+
+import dubbing
 import urllib.parse
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -185,6 +187,45 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
+        if parsed.path.startswith("/dub/"):
+            parts = [part for part in parsed.path.strip("/").split("/") if part]
+            query = urllib.parse.parse_qs(parsed.query)
+            lang = query.get("lang", ["ru"])[0]
+            if len(parts) == 3 and parts[1] == "prepare":
+                data = dubbing.prepare(parts[2], lang)
+                body = json.dumps(data, ensure_ascii=False).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            if len(parts) == 3 and parts[1] == "status":
+                data = dubbing.status(parts[2], lang)
+                body = json.dumps(data, ensure_ascii=False).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            if len(parts) == 2:
+                video_id = parts[1]
+                import os as _os
+                path = _os.path.join(dubbing.CACHE_DIR, dubbing.job_key(video_id, lang) + ".mp4")
+                if _os.path.exists(path):
+                    _serve_file(self, path)
+                else:
+                    body = b'{"status":"not_ready"}'
+                    self.send_response(404)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                return
+            self.send_error(404, "dub")
+            return
+
         if parsed.path.startswith("/update/"):
             name = os.path.basename(parsed.path)
             update_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "update", name)
@@ -362,6 +403,8 @@ def main():
     args = parser.parse_args()
 
     FFMPEG = args.ffmpeg
+    dubbing.FFMPEG = FFMPEG
+    dubbing.FFPROBE = os.path.join(os.path.dirname(FFMPEG), 'ffprobe.exe') if os.path.dirname(FFMPEG) else 'ffprobe'
     os.makedirs(CACHE_DIR, exist_ok=True)
     print("CrimTube mux server on http://0.0.0.0:%d (ffmpeg=%s)" % (args.port, FFMPEG), flush=True)
     ThreadingHTTPServer(("0.0.0.0", args.port), Handler).serve_forever()

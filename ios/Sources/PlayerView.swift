@@ -21,6 +21,9 @@ struct PlayerView: View {
     @State private var timeObserver: Any?
     @State private var fullscreen = false
     @State private var comments: [Comment] = []
+    @State private var dubJob: DubJob?
+    @State private var dubPreparing = false
+    @State private var dubError: String?
     @State private var speed: Double = 1.0
 
     var body: some View {
@@ -135,6 +138,28 @@ struct PlayerView: View {
                     }
                 }
                 .font(.footnote)
+
+                if !muxServer.isEmpty {
+                    Button {
+                        startDubbing()
+                    } label: {
+                        Label(dubPreparing ? "Готовлю озвучку…" : "Озвучить на русском",
+                              systemImage: "waveform")
+                    }
+                    .disabled(dubPreparing)
+                }
+
+                if let job = dubJob {
+                    Text("Озвучка: " + (job.message ?? "") + " " + String(job.progress ?? 0) + "%")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                }
+
+                if let dubError = dubError {
+                    Text(dubError)
+                        .font(.footnote)
+                        .foregroundColor(.orange)
+                }
 
                 if let message = downloadMessage {
                     Text(message)
@@ -276,6 +301,47 @@ struct PlayerView: View {
         while base.hasSuffix("/") { base.removeLast() }
         guard let url = URL(string: base + "/live/" + item.videoId + "?q=\(height)") else { return }
         let stream = FormatStream(url: url.absoluteString, qualityLabel: "\(height)p", type: "video/mp4", itag: "server-\(height)")
+        select(stream)
+    }
+
+    private func startDubbing() {
+        guard !dubPreparing else { return }
+        dubPreparing = true
+        dubError = nil
+        dubJob = nil
+        let base = muxServer
+        let videoId = item.videoId
+
+        Task {
+            do {
+                var job = try await DubClient.shared.prepare(base: base, videoId: videoId)
+                for _ in 0..<600 {
+                    await MainActor.run { dubJob = job }
+                    if job.status == "ready" {
+                        await MainActor.run { playDubbed(base: base) }
+                        break
+                    }
+                    if job.status == "error" {
+                        throw DubError.server(job.error ?? "Не удалось озвучить видео.")
+                    }
+                    try await Task.sleep(nanoseconds: 2_000_000_000)
+                    job = try await DubClient.shared.status(base: base, videoId: videoId)
+                }
+                await MainActor.run { dubPreparing = false }
+            } catch {
+                await MainActor.run {
+                    dubError = (error as? LocalizedError)?.errorDescription ?? "Ошибка озвучки."
+                    dubPreparing = false
+                }
+            }
+        }
+    }
+
+    private func playDubbed(base: String) {
+        var urlBase = base.trimmingCharacters(in: .whitespacesAndNewlines)
+        while urlBase.hasSuffix("/") { urlBase.removeLast() }
+        guard let url = URL(string: urlBase + "/dub/" + item.videoId + "?lang=ru") else { return }
+        let stream = FormatStream(url: url.absoluteString, qualityLabel: "RU", type: "video/mp4", itag: "dub")
         select(stream)
     }
 

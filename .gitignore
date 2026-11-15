@@ -32,3 +32,11 @@ ios/*.xcworkspace/
 Payload/
 *.ipa
 DerivedData/
+
+# Серверные бинарники и кэш
+uwp/server/bin/
+uwp/server/ffmpeg_pkg/
+uwp/server/cache/
+uwp/server/pydeps/
+uwp/server/.tmp/
+/server/
