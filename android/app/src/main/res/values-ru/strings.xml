@@ -254,4 +254,5 @@
     <string name="error_tls">Ошибка защищённого соединения. Попробуйте другой инстанс.</string>
     <string name="error_playback_generic">Не удалось воспроизвести видео. Смените качество или инстанс.</string>
     <string name="contact_email">Связаться: %s</string>
+    <string name="tv_search">Поиск</string>
 </resources>

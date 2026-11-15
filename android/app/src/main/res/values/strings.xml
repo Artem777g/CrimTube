@@ -239,4 +239,5 @@
     <string name="error_tls">Secure connection failed. Try another instance.</string>
     <string name="error_playback_generic">Could not play the video. Change quality or instance.</string>
     <string name="contact_email">Contact: %s</string>
+    <string name="tv_search">Search</string>
 </resources>
