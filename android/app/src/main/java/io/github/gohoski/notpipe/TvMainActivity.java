@@ -38,6 +38,9 @@ public class TvMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_main);
 
+        TextView version = (TextView) findViewById(R.id.tv_version);
+        version.setText("TV · " + BuildConfig.VERSION_CODE);
+
         grid = (GridView) findViewById(R.id.tv_grid);
         loading = (ProgressBar) findViewById(R.id.tv_loading);
         empty = (TextView) findViewById(R.id.tv_empty);
