@@ -19,15 +19,28 @@ struct PlayerView: View {
     @State private var loading = true
     @State private var downloadMessage: String?
     @State private var timeObserver: Any?
+    @State private var fullscreen = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 if let player = player {
-                    VideoPlayer(player: player)
-                        .frame(height: 230)
-                        .background(Color.black)
-                        .cornerRadius(8)
+                    ZStack(alignment: .topTrailing) {
+                        VideoPlayer(player: player)
+                            .frame(height: 230)
+                            .background(Color.black)
+                            .cornerRadius(8)
+                        Button {
+                            fullscreen = true
+                        } label: {
+                            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                .padding(8)
+                                .background(Color.black.opacity(0.6))
+                                .foregroundColor(.white)
+                                .clipShape(Circle())
+                        }
+                        .padding(8)
+                    }
                 } else {
                     ZStack {
                         Color.black
@@ -46,9 +59,17 @@ struct PlayerView: View {
 
                 Text(item.title)
                     .font(.headline)
-                Text(item.author)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                if let channel = channel {
+                    NavigationLink(destination: ChannelView(channel: channel)) {
+                        Text(item.author)
+                            .font(.subheadline)
+                            .foregroundColor(.accentColor)
+                    }
+                } else {
+                    Text(item.author)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
 
                 HStack(spacing: 12) {
                     Menu {
@@ -125,6 +146,11 @@ struct PlayerView: View {
         .onDisappear {
             saveCurrent()
             player?.pause()
+        }
+        .fullScreenCover(isPresented: $fullscreen) {
+            if let player = player {
+                FullscreenPlayer(player: player)
+            }
         }
     }
 
@@ -225,5 +251,29 @@ struct PlayerView: View {
         }
         DownloadManager.shared.download(item: item, stream: stream)
         downloadMessage = "Скачивание началось. Смотрите вкладку «Загрузки»."
+    }
+}
+
+
+struct FullscreenPlayer: View {
+    let player: AVPlayer
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            Color.black.ignoresSafeArea()
+            VideoPlayer(player: player)
+                .ignoresSafeArea()
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 32))
+                    .foregroundColor(.white.opacity(0.85))
+                    .padding()
+            }
+        }
+        .statusBar(hidden: true)
+        .onAppear { player.play() }
     }
 }

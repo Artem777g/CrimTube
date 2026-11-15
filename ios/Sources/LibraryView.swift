@@ -121,6 +121,8 @@ struct LibraryView: View {
 struct ChannelView: View {
     let channel: Channel
 
+    @ObservedObject private var subscriptions = SubscriptionStore.shared
+
     @State private var items: [VideoItem] = []
     @State private var error: String?
     @State private var loading = true
@@ -135,6 +137,11 @@ struct ChannelView: View {
         }
         .listStyle(.plain)
         .navigationTitle(channel.author)
+        .toolbar {
+            Button(subscriptions.contains(channel) ? "Вы подписаны" : "Подписаться") {
+                subscriptions.toggle(channel)
+            }
+        }
         .overlay {
             if loading {
                 ProgressView()
