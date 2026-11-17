@@ -94,7 +94,7 @@
 
             <TextBlock Margin="0,18,0,0" FontSize="12" TextWrapping="Wrap"
                        Foreground="#FF777777"
-                       Text="CrimTube для Windows 10 Mobile • 0.4.8 • WTFPL" />
+                       Text="CrimTube для Windows 10 Mobile • 0.4.9 • WTFPL" />
 
             <TextBlock Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap"
                        Foreground="#FF777777"
