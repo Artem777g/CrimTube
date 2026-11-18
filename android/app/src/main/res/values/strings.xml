@@ -241,4 +241,16 @@
     <string name="contact_email">Contact: %s</string>
     <string name="tv_search">Search</string>
     <string name="tv_search_hint">Enter a query</string>
+    <string name="help">How to use</string>
+    <string name="help_text">SEARCH AND PLAYBACK\nType a query or open Popular. Tap a video to open the player.\n\nQUALITY\nIn the player choose Quality. 360p plays directly; 720p/1080p may need a mux server.\n\nDOWNLOADS\nDownload saves video or audio. The Downloads screen opens, deletes and clears files.\n\nINSTANCES\nIf a video does not open, refresh the instance list and pick another address.\n\nHISTORY AND LATER\nHistory keeps your position; Watch later stores bookmarks.\n\nUPDATES\nUpdates menu: paste the latest.json URL and press Check.\n\nERRORS\nOn a crash the app saves a report and offers to send it. Set the report server URL below.</string>
+    <string name="report_url">Crash report server URL</string>
+    <string name="report_url_hint">http://SERVER-IP:8765/report</string>
+    <string name="save">Save</string>
+    <string name="crash_title">CrimTube crashed</string>
+    <string name="send_report">Send</string>
+    <string name="send_email">Email</string>
+    <string name="close">Close</string>
+    <string name="report_sent">Report sent</string>
+    <string name="report_failed">Could not send report</string>
+    <string name="report_saved">URL saved</string>
 </resources>

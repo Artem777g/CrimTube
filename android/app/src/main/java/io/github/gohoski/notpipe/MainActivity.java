@@ -395,6 +395,9 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
             return true;
+        } else if (item.getItemId() == R.id.menu_help) {
+            startActivity(new Intent(this, HelpActivity.class));
+            return true;
         } else if (item.getItemId() == R.id.menu_updates) {
             UpdateChecker.showSettingsDialog(this);
             return true;

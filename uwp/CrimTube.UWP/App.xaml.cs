@@ -18,6 +18,7 @@ namespace CrimTube.UWP
         public App()
         {
             InitializeComponent();
+            CrimTube.UWP.Services.CrashReporter.Install(this);
             Suspending += OnSuspending;
         }
 

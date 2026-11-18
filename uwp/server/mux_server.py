@@ -182,6 +182,29 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         print("[%s] %s" % (self.address_string(), fmt % args), flush=True)
 
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path != "/report":
+            self.send_error(404, "not found")
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(length)
+            folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reports")
+            os.makedirs(folder, exist_ok=True)
+            name = time.strftime("%Y%m%d-%H%M%S") + "-" + str(int(time.time() * 1000) % 1000) + ".json"
+            with open(os.path.join(folder, name), "wb") as file:
+                file.write(body)
+            response = b'{"ok":true}'
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(response)))
+            self.end_headers()
+            self.wfile.write(response)
+        except Exception as exc:
+            self.send_error(500, str(exc)[:200])
+
     def serve_live(self, video_id, height):
         _serve_live(self, video_id, height)
 

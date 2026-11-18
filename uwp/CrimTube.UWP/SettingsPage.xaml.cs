@@ -75,6 +75,7 @@ namespace CrimTube.UWP
             KindBox.SelectedIndex = AppSettings.InstanceIsInvidious ? 0 : 1;
             ServerBox.Text = AppSettings.ServerUrl;
             UpdateBox.Text = AppSettings.UpdateUrl;
+            ReportBox.Text = AppSettings.ReportUrl;
             ShowStatus(string.Empty);
         }
 
@@ -94,8 +95,10 @@ namespace CrimTube.UWP
             AppSettings.Save(url, isInvidious);
             AppSettings.ServerUrl = ServerBox.Text;
             AppSettings.UpdateUrl = UpdateBox.Text;
+            AppSettings.ReportUrl = ReportBox.Text;
             ServerBox.Text = AppSettings.ServerUrl;
             UpdateBox.Text = AppSettings.UpdateUrl;
+            ReportBox.Text = AppSettings.ReportUrl;
             InstanceBox.Text = url;
             ShowStatus("Сохранено: " + url + ". Список на главном экране обновится при возврате.");
         }
@@ -120,10 +123,28 @@ namespace CrimTube.UWP
             }
         }
 
+        private async void OnHelpClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var dialog = new Windows.UI.Xaml.Controls.ContentDialog
+            {
+                Title = "Как пользоваться",
+                Content = "Поиск и просмотр: введите запрос в строку поиска или откройте популярное.\n\n"
+                          + "Качество: в плеере выберите качество. 360p идёт напрямую, 720p/1080p — через mux-сервер.\n\n"
+                          + "Загрузки: кнопка «Скачать» сохраняет видео или аудио, вкладка «Загрузки» открывает и удаляет файлы.\n\n"
+                          + "Инстансы: если видео не открывается — обновите пинг и выберите другой адрес.\n\n"
+                          + "Обновления: Настройки → URL latest.json → Проверить.\n\n"
+                          + "Ошибки: при падении отчёт сохраняется в LocalFolder и отправляется на указанный выше сервер.",
+                CloseButtonText = "OK"
+            };
+            await dialog.ShowAsync();
+        }
+
         private async void OnUpdateCheckClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             AppSettings.UpdateUrl = UpdateBox.Text;
+            AppSettings.ReportUrl = ReportBox.Text;
             UpdateBox.Text = AppSettings.UpdateUrl;
+            ReportBox.Text = AppSettings.ReportUrl;
             await UpdateService.CheckAsync(true);
         }
 

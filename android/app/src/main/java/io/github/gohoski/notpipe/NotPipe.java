@@ -20,6 +20,7 @@ public class NotPipe extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = this;
+        CrashHandler.install(this);
         // Let's initialize our one-time stuffs here :3
         // Initialize ConfigManager first (Manager depends on it)
         ConfigManager.init(this);

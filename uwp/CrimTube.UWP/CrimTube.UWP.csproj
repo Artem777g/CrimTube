@@ -111,6 +111,7 @@
     <Compile Include="Services\VideoApi.cs" />
     <Compile Include="Services\Yt2009Client.cs" />
     <Compile Include="Services\UpdateService.cs" />
+    <Compile Include="Services\CrashReporter.cs" />
     <Compile Include="Services\ErrorText.cs" />
     <Compile Include="Util\Format.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

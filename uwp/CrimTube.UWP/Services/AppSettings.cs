@@ -42,6 +42,7 @@ namespace CrimTube.UWP.Services
         private const string KeyQuality = "preferred_quality";
         private const string KeyServer = "mux_server";
         private const string KeyUpdateUrl = "update_url";
+        private const string KeyReportUrl = "report_url";
 
         // Временный туннель для проверки; пользователь может заменить в настройках.
         private const string DefaultServer =
@@ -202,6 +203,21 @@ namespace CrimTube.UWP.Services
             set
             {
                 ApplicationData.Current.LocalSettings.Values[KeyUpdateUrl] =
+                    string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim();
+            }
+        }
+
+        /// <summary>URL сервера для отчётов об ошибках (пусто = не отправлять).</summary>
+        public static string ReportUrl
+        {
+            get
+            {
+                var stored = ApplicationData.Current.LocalSettings.Values[KeyReportUrl] as string;
+                return string.IsNullOrEmpty(stored) ? string.Empty : stored.Trim();
+            }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values[KeyReportUrl] =
                     string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim();
             }
         }

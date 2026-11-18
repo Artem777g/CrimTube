@@ -92,9 +92,14 @@
                        Foreground="{StaticResource MutedTextBrush}"
                        Text="Если видео не открывается, обычно виноват сам инстанс: публичные серверы периодически падают или блокируются. Сохраните другой адрес из списка и нажмите «Проверить». Свой Invidious на домашнем сервере надёжнее всего." />
 
+            <TextBlock Text="Отчёты об ошибках" FontSize="13" Margin="0,16,0,4" />
+            <TextBox x:Name="ReportBox" FontSize="14" InputScope="Url"
+                     PlaceholderText="http://IP-сервера:8765/report" />
+            <Button Content="Как пользоваться" Margin="0,8,0,0" Click="OnHelpClick" />
+
             <TextBlock Margin="0,18,0,0" FontSize="12" TextWrapping="Wrap"
                        Foreground="#FF777777"
-                       Text="CrimTube для Windows 10 Mobile • 0.4.9 • WTFPL" />
+                       Text="CrimTube для Windows 10 Mobile • 0.5.0 • WTFPL" />
 
             <TextBlock Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap"
                        Foreground="#FF777777"

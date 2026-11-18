@@ -256,4 +256,16 @@
     <string name="contact_email">Связаться: %s</string>
     <string name="tv_search">Поиск</string>
     <string name="tv_search_hint">Введите запрос</string>
+    <string name="help">Как пользоваться</string>
+    <string name="help_text">ПОИСК И ПРОСМОТР\nВведите запрос в строку поиска или откройте «Популярное». Нажмите на видео, чтобы открыть плеер.\n\nКАЧЕСТВО\nВ плеере нажмите «Качество» и выберите поток. 360p идёт напрямую; 720p/1080p могут требовать mux-сервер.\n\nЗАГРУЗКИ\nКнопка «Скачать» сохраняет видео или аудио. Экран «Загрузки»: открыть, удалить, очистить всё.\n\nИНСТАНСЫ\nЕсли видео не открывается, откройте «Инстансы», обновите пинг и выберите другой адрес.\n\nИСТОРИЯ И ПОЗЖЕ\n«История» хранит просмотры и позицию; «Смотреть позже» — закладки.\n\nОБНОВЛЕНИЯ\nМеню «Обновления»: вставьте URL latest.json и нажмите «Проверить».\n\nОШИБКИ\nПри падении приложение сохраняет отчёт и предлагает отправить его. Адрес сервера отчётов можно указать ниже.</string>
+    <string name="report_url">Куда отправлять отчёты об ошибках</string>
+    <string name="report_url_hint">http://IP-сервера:8765/report</string>
+    <string name="save">Сохранить</string>
+    <string name="crash_title">Приложение упало</string>
+    <string name="send_report">Отправить</string>
+    <string name="send_email">Почтой</string>
+    <string name="close">Закрыть</string>
+    <string name="report_sent">Отчёт отправлен</string>
+    <string name="report_failed">Не удалось отправить отчёт</string>
+    <string name="report_saved">Адрес сохранён</string>
 </resources>
