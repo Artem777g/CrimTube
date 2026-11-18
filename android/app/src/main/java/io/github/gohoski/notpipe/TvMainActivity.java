@@ -62,6 +62,7 @@ public class TvMainActivity extends Activity {
         Button history = (Button) findViewById(R.id.tv_history);
         Button downloads = (Button) findViewById(R.id.tv_downloads);
         Button settings = (Button) findViewById(R.id.tv_settings);
+        Button help = (Button) findViewById(R.id.tv_help);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,12 @@ public class TvMainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TvMainActivity.this, SettingsActivity.class));
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TvMainActivity.this, HelpActivity.class));
             }
         });
         subscriptions.setOnClickListener(new View.OnClickListener() {

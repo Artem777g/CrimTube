@@ -10,8 +10,8 @@ YouTube-клиент для старых Android и Windows 10 Mobile. Рабо�
 
 | Платформа | Файл | Версия |
 | --- | --- | --- |
-| Android / Android TV (API 3+) | `CrimTube-0.3.1.apk` | 0.3.1, versionCode 37 |
-| Windows 10 Mobile (ARM) | `CrimTube.UWP_0.4.9.0_ARM.appx` | 0.4.9.0 |
+| Android / Android TV (API 3+) | `CrimTube-0.3.1.apk` | 0.3.1, versionCode 39 |
+| Windows 10 Mobile (ARM) | `CrimTube.UWP_0.5.0.0_ARM.appx` | 0.5.0.0 |
 | iOS 15+ (AltStore) | `CrimTube.ipa` | 0.1.7 |
 
 Все версии лежат в разделе [Releases](../../releases). Там же:
