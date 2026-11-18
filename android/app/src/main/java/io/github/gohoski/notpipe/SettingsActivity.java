@@ -50,6 +50,31 @@ public class SettingsActivity extends Activity implements InstancesUpdater.OnIns
         config = configManager.getConfig();
 
         apiInstancesContainer = (LinearLayout) findViewById(R.id.apiInstancesContainer);
+        findViewById(R.id.settings_instances_list).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, InstancesActivity.class));
+            }
+        });
+        findViewById(R.id.settings_updates).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateChecker.showSettingsDialog(SettingsActivity.this);
+            }
+        });
+        findViewById(R.id.settings_help).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, HelpActivity.class));
+            }
+        });
+        findViewById(R.id.settings_about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutDialog.show(SettingsActivity.this);
+            }
+        });
+
         updateInstancesChk = (CheckBox) findViewById(R.id.update_chk);
         updateInstancesLayout = (LinearLayout) findViewById(R.id.update_instances);
         instancesUrlEdit = (EditText) findViewById(R.id.instances_url);

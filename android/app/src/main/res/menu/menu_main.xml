@@ -17,23 +17,7 @@
         android:title="@string/downloads"
         android:icon="@android:drawable/ic_menu_save"/>
     <item
-        android:id="@+id/menu_instances"
-        android:title="@string/instances"
-        android:icon="@android:drawable/ic_menu_manage"/>
-    <item
-        android:id="@+id/menu_updates"
-        android:title="@string/updates"
-        android:icon="@android:drawable/ic_menu_rotate"/>
-    <item
-        android:id="@+id/menu_help"
-        android:title="@string/help"
-        android:icon="@android:drawable/ic_menu_help"/>
-    <item
         android:id="@+id/menu_settings"
         android:title="@string/settings"
         android:icon="@android:drawable/ic_menu_preferences"/>
-    <item
-        android:id="@+id/menu_about"
-        android:title="@string/about"
-        android:icon="@android:drawable/ic_menu_info_details"/>
 </menu>

@@ -385,98 +385,12 @@ public class MainActivity extends Activity implements InstancesUpdater.OnInstanc
         } else if (item.getItemId() == R.id.menu_history) {
             startActivity(new Intent(this, HistoryActivity.class));
             return true;
-        } else if (item.getItemId() == R.id.menu_instances) {
-            startActivity(new Intent(this, InstancesActivity.class));
-            return true;
         } else if (item.getItemId() == R.id.menu_downloads) {
             startActivity(new Intent(this, DownloadsActivity.class));
             return true;
         } else if (item.getItemId() == R.id.menu_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             finish();
-            return true;
-        } else if (item.getItemId() == R.id.menu_help) {
-            startActivity(new Intent(this, HelpActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.menu_updates) {
-            UpdateChecker.showSettingsDialog(this);
-            return true;
-        } else if (item.getItemId() == R.id.menu_about) {
-            LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(15, 15, 15, 15);
-
-            final TextView app = new TextView(this);
-            app.setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
-            app.setTypeface(null, Typeface.BOLD);
-            app.setTextSize(20);
-            app.setGravity(Gravity.CENTER_HORIZONTAL);
-            layout.addView(app);
-
-            final ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            imageView.setImageResource(R.drawable.main_icon);
-            layout.addView(imageView);
-
-            final TextView text = new TextView(this);
-            text.setText(getString(R.string.about_));
-
-            final TextView license = new TextView(this);
-            license.setText("\n\nMIT License\n" +
-                    "\n" +
-                    "Copyright (c) 2021-2025 Arman Jussupgaliyev\n" +
-                    "\n" +
-                    "Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
-                    "of this software and associated documentation files (the \"Software\"), to deal\n" +
-                    "in the Software without restriction, including without limitation the rights\n" +
-                    "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" +
-                    "copies of the Software, and to permit persons to whom the Software is\n" +
-                    "furnished to do so, subject to the following conditions:\n" +
-                    "\n" +
-                    "The above copyright notice and this permission notice shall be included in all\n" +
-                    "copies or substantial portions of the Software.\n" +
-                    "\n" +
-                    "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
-                    "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
-                    "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
-                    "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
-                    "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
-                    "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
-                    "SOFTWARE.");
-            license.setTextSize(12);
-            layout.addView(text);
-
-            final TextView contact = new TextView(this);
-            contact.setText(getString(R.string.contact_email, "artm.golovkov.00@inbox.ru"));
-            contact.setTextSize(15);
-            contact.setPadding(0, 12, 0, 0);
-            contact.setTextColor(0xFF4FC3F7);
-            contact.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent mail = new Intent(Intent.ACTION_SENDTO,
-                                android.net.Uri.parse("mailto:artm.golovkov.00@inbox.ru"));
-                        startActivity(mail);
-                    } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, R.string.update_install_failed,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            layout.addView(contact);
-            layout.addView(license);
-
-            ScrollView scrollView = new ScrollView(this);
-            scrollView.addView(layout);
-
-            new android.app.AlertDialog.Builder(this)
-                    .setTitle(R.string.app_name)
-                    .setView(scrollView)
-                    .setNeutralButton(android.R.string.ok, null).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
