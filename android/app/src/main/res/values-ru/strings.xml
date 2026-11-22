@@ -268,4 +268,5 @@
     <string name="report_sent">Отчёт отправлен</string>
     <string name="report_failed">Не удалось отправить отчёт</string>
     <string name="report_saved">Адрес сохранён</string>
+    <string name="modern_search_hint">Поиск видео и каналов</string>
 </resources>

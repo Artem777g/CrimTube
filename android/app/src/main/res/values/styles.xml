@@ -6,4 +6,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorAccent">#33B5E5</item>
     </style>
+    <style name="ModernTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorAccent">#E53935</item>
+    </style>
 </resources>
