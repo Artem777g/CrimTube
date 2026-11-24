@@ -53,7 +53,7 @@ public class ModernMainActivity extends Activity {
             @Override
             public void onItemClick(android.widget.AdapterView<?> parent, View view, int position, long id) {
                 VideoInfo video = videos.get(position);
-                Intent intent = new Intent(ModernMainActivity.this, VideoActivity.class);
+                Intent intent = new Intent(ModernMainActivity.this, ModernPlayerActivity.class);
                 intent.putExtra("ID", video.id);
                 startActivity(intent);
             }
@@ -77,19 +77,19 @@ public class ModernMainActivity extends Activity {
         findViewById(R.id.modern_settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernSettingsActivity.class));
             }
         });
         findViewById(R.id.modern_subscriptions).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, SubscriptionsActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernSubscriptionsActivity.class));
             }
         });
         findViewById(R.id.modern_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, HistoryActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernHistoryActivity.class));
             }
         });
         findViewById(R.id.modern_later).setOnClickListener(new View.OnClickListener() {
@@ -114,13 +114,13 @@ public class ModernMainActivity extends Activity {
         findViewById(R.id.modern_nav_downloads).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, DownloadsActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernDownloadsActivity.class));
             }
         });
         findViewById(R.id.modern_nav_settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernSettingsActivity.class));
             }
         });
 

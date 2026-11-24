@@ -86,36 +86,48 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <Button
+            <TextView
                 android:id="@+id/modern_subscriptions"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="38dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:includeFontPadding="false"
                 android:text="@string/subscriptions"
                 android:textColor="#DDDDDD"
                 android:textSize="12sp"
-                android:textAllCaps="false"
                 android:background="@drawable/modern_chip_bg" />
 
-            <Button
+            <TextView
                 android:id="@+id/modern_history"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="38dp"
                 android:layout_marginLeft="8dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:includeFontPadding="false"
                 android:text="@string/history"
                 android:textColor="#DDDDDD"
                 android:textSize="12sp"
-                android:textAllCaps="false"
                 android:background="@drawable/modern_chip_bg" />
 
-            <Button
+            <TextView
                 android:id="@+id/modern_later"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="38dp"
                 android:layout_marginLeft="8dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:includeFontPadding="false"
                 android:text="@string/watch_later"
                 android:textColor="#DDDDDD"
                 android:textSize="12sp"
-                android:textAllCaps="false"
                 android:background="@drawable/modern_chip_bg" />
         </LinearLayout>
     </HorizontalScrollView>

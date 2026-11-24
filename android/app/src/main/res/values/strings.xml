@@ -254,4 +254,7 @@
     <string name="report_failed">Could not send report</string>
     <string name="report_saved">URL saved</string>
     <string name="modern_search_hint">Search videos and channels</string>
+    <string name="player_quality">Quality</string>
+    <string name="downloads_empty">No downloads yet</string>
+    <string name="subscriptions_empty">No subscriptions yet</string>
 </resources>

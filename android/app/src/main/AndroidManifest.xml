@@ -29,6 +29,28 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ModernPlayerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/ModernTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ModernHistoryActivity"
+            android:theme="@style/ModernTheme"
+            android:exported="false" />
+        <activity
+            android:name=".ModernDownloadsActivity"
+            android:theme="@style/ModernTheme"
+            android:exported="false" />
+        <activity
+            android:name=".ModernSubscriptionsActivity"
+            android:theme="@style/ModernTheme"
+            android:exported="false" />
+        <activity
+            android:name=".ModernSettingsActivity"
+            android:theme="@style/ModernTheme"
+            android:exported="false" />
+        <activity
             android:name=".TvMainActivity"
             android:label="@string/app_name"
             android:theme="@style/TvTheme"

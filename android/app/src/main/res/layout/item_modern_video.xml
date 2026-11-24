@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:focusable="true"
-    android:clickable="true"
+    android:focusable="false"
+    android:clickable="false"
     android:background="@drawable/modern_card_bg">
 
     <FrameLayout

@@ -269,4 +269,7 @@
     <string name="report_failed">Не удалось отправить отчёт</string>
     <string name="report_saved">Адрес сохранён</string>
     <string name="modern_search_hint">Поиск видео и каналов</string>
+    <string name="player_quality">Качество</string>
+    <string name="downloads_empty">Загрузок пока нет</string>
+    <string name="subscriptions_empty">Подписок пока нет</string>
 </resources>
