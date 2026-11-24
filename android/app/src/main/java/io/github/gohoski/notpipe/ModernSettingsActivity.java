@@ -48,7 +48,7 @@ public class ModernSettingsActivity extends Activity {
         findViewById(R.id.ms_advanced).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernSettingsActivity.this, SettingsActivity.class));
+                startActivity(new Intent(ModernSettingsActivity.this, ModernAdvancedSettingsActivity.class));
             }
         });
     }

@@ -6,6 +6,7 @@
     android:background="#0B0D10">
 
     <LinearLayout
+        android:id="@+id/modern_player_top"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
@@ -51,6 +52,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/modern_player_video_frame"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:background="#000000">
@@ -103,6 +105,19 @@
             android:clickable="true" />
 
         <TextView
+            android:id="@+id/modern_player_fullscreen"
+            android:layout_width="44dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:text="⛶"
+            android:textColor="#DDDDDD"
+            android:textSize="18sp"
+            android:background="@drawable/modern_chip_bg"
+            android:focusable="true"
+            android:clickable="true" />
+
+        <TextView
             android:id="@+id/modern_player_forward10"
             android:layout_width="0dp"
             android:layout_height="38dp"
@@ -118,6 +133,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/modern_player_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

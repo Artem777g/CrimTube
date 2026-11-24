@@ -257,4 +257,5 @@
     <string name="player_quality">Quality</string>
     <string name="downloads_empty">No downloads yet</string>
     <string name="subscriptions_empty">No subscriptions yet</string>
+    <string name="use_external_player">Use external player</string>
 </resources>

@@ -272,4 +272,5 @@
     <string name="player_quality">Качество</string>
     <string name="downloads_empty">Загрузок пока нет</string>
     <string name="subscriptions_empty">Подписок пока нет</string>
+    <string name="use_external_player">Внешний плеер</string>
 </resources>
