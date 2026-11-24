@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_subscriptions"
+        android:title="@string/subscriptions"
+        android:icon="@android:drawable/btn_star" />
+    <item
+        android:id="@+id/menu_watch_later"
+        android:title="@string/watch_later"
+        android:icon="@android:drawable/ic_menu_recent_history" />
+    <item
+        android:id="@+id/menu_history"
+        android:title="@string/history"
+        android:icon="@android:drawable/ic_menu_agenda" />
+    <item
+        android:id="@+id/menu_downloads"
+        android:title="@string/downloads"
+        android:icon="@android:drawable/ic_menu_save"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/settings"
+        android:icon="@android:drawable/ic_menu_preferences"/>
+</menu>
