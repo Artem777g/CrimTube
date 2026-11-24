@@ -95,7 +95,7 @@ public class ModernMainActivity extends Activity {
         findViewById(R.id.modern_later).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, WatchLaterActivity.class));
+                startActivity(new Intent(ModernMainActivity.this, ModernWatchLaterActivity.class));
             }
         });
         findViewById(R.id.modern_nav_home).setOnClickListener(new View.OnClickListener() {
