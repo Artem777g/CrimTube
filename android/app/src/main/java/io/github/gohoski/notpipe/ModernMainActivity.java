@@ -36,6 +36,7 @@ public class ModernMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modern_main);
+        getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         if (NotPipe.SDK >= 21) {
             getWindow().setStatusBarColor(0xFF0B0D10);
             getWindow().setNavigationBarColor(0xFF0E1014);
@@ -100,7 +101,8 @@ public class ModernMainActivity extends Activity {
         findViewById(R.id.modern_nav_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadPopular();
+                search.clearFocus();
+        loadPopular();
             }
         });
         findViewById(R.id.modern_nav_search).setOnClickListener(new View.OnClickListener() {
@@ -122,6 +124,7 @@ public class ModernMainActivity extends Activity {
             }
         });
 
+        search.clearFocus();
         loadPopular();
     }
 
