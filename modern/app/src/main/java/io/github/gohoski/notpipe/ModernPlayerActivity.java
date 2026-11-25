@@ -648,7 +648,6 @@ public class ModernPlayerActivity extends Activity {
         if (showingComments) {
             loadComments();
         }
-        startPlayback();
     }
 
     private void populateMeta() {
@@ -979,18 +978,19 @@ public class ModernPlayerActivity extends Activity {
     }
 
     private void startPlayback() {
-        if (video == null) return;
-        statusView.setVisibility(View.GONE);
-        loading.setVisibility(View.VISIBLE);
+        openLegacyPlayer();
+    }
 
-        Config config = ConfigManager.getInstance().getConfig();
-        if (!config.isConvertVideos() && QUALITY_DEFAULT.equals(quality)
-                && video.videoUrl != null && video.videoUrl.length() > 0) {
-            playUrl(video.videoUrl);
-            return;
+    private void openLegacyPlayer() {
+        if (videoId == null) return;
+        try {
+            Intent intent = new Intent(this, VideoActivity.class);
+            intent.putExtra("ID", videoId);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, R.string.error_playback_generic, Toast.LENGTH_LONG).show();
         }
-        streamTask = new StreamTask();
-        streamTask.execute(videoId, quality);
     }
 
     private void playUrl(String url) {
@@ -1078,16 +1078,14 @@ public class ModernPlayerActivity extends Activity {
     private void startFromPoster() {
         posterView.setVisibility(View.GONE);
         posterPlayView.setVisibility(View.GONE);
-        playWhenReady = true;
-        try {
-            videoView.start();
-            playView.setText(ICON_PAUSE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        openLegacyPlayer();
     }
 
     private void togglePlay() {
+        openLegacyPlayer();
+    }
+
+    private void togglePlayInternal() {
         try {
             if (videoView.isPlaying()) {
                 videoView.pause();
