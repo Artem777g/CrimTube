@@ -24,6 +24,7 @@ import io.github.gohoski.notpipe.NotPipe;
 import io.github.gohoski.notpipe.R;
 import io.github.gohoski.notpipe.config.Config;
 import io.github.gohoski.notpipe.config.ConfigManager;
+import io.github.gohoski.notpipe.data.Comment;
 import io.github.gohoski.notpipe.data.Video;
 import io.github.gohoski.notpipe.http.HttpClient;
 import io.github.gohoski.notpipe.http.VideoTooLongException;
@@ -737,6 +738,20 @@ public class Manager {
         public boolean supportsConversion;
         public boolean supportsChannels;
         public boolean supportsAudio;
+    }
+
+    public List<Comment> getCommentsFromAny(String id) {
+        initializeInstances();
+        for (int i = 0; i < metadataInstances.size(); i++) {
+            Metadata metadata = metadataInstances.get(i);
+            try {
+                List<Comment> comments = metadata.getComments(id);
+                if (comments != null && !comments.isEmpty()) return comments;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<Comment>();
     }
 
     public List<InstanceInfo> videoInstancesInfo() {

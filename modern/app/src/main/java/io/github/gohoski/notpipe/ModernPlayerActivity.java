@@ -1370,17 +1370,7 @@ public class ModernPlayerActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-            List<Manager.InstanceInfo> instances = Manager.getInstance().allInstancesInfo();
-            for (int i = 0; i < instances.size(); i++) {
-                Manager.InstanceInfo info = instances.get(i);
-                if (!info.supportsMetadata || !(info.instance instanceof Metadata)) continue;
-                try {
-                    result = ((Metadata) info.instance).getComments(params[0]);
-                    if (result != null && !result.isEmpty()) return result;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            result = Manager.getInstance().getCommentsFromAny(params[0]);
             return result;
         }
 

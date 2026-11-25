@@ -163,19 +163,31 @@ public class ModernInstancesActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             latencies.clear();
+            java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(4);
             for (int i = 0; i < instances.size(); i++) {
-                String url = instances.get(i);
-                String base = url;
-                int comma = base.indexOf(',');
-                if (comma >= 0) base = base.substring(0, comma);
-                if (!base.startsWith("http://") && !base.startsWith("https://")) base = "http://" + base;
-                try {
-                    long start = System.currentTimeMillis();
-                    HttpClient.executeToString(new HttpRequest(base, "/"), 6000);
-                    latencies.put(url, Integer.valueOf((int) (System.currentTimeMillis() - start)));
-                } catch (Exception e) {
-                    latencies.put(url, Integer.valueOf(-1));
-                }
+                final String url = instances.get(i);
+                pool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        String base = url;
+                        int comma = base.indexOf(',');
+                        if (comma >= 0) base = base.substring(0, comma);
+                        if (!base.startsWith("http://") && !base.startsWith("https://")) base = "http://" + base;
+                        try {
+                            long start = System.currentTimeMillis();
+                            HttpClient.executeToString(new HttpRequest(base, "/"), 3000);
+                            latencies.put(url, Integer.valueOf((int) (System.currentTimeMillis() - start)));
+                        } catch (Exception e) {
+                            latencies.put(url, Integer.valueOf(-1));
+                        }
+                    }
+                });
+            }
+            pool.shutdown();
+            try {
+                pool.awaitTermination(15, java.util.concurrent.TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             return null;
         }
