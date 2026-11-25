@@ -74,12 +74,6 @@ public class ModernMainActivity extends Activity {
             }
         });
 
-        findViewById(R.id.modern_settings).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ModernMainActivity.this, ModernSettingsActivity.class));
-            }
-        });
         findViewById(R.id.modern_subscriptions).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +97,6 @@ public class ModernMainActivity extends Activity {
             public void onClick(View v) {
                 search.clearFocus();
         loadPopular();
-            }
-        });
-        findViewById(R.id.modern_nav_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search.requestFocus();
             }
         });
         findViewById(R.id.modern_nav_downloads).setOnClickListener(new View.OnClickListener() {

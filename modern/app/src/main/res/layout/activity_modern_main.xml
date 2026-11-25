@@ -25,16 +25,6 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/modern_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="@string/settings"
-            android:textColor="#DDDDDD"
-            android:textSize="13sp"
-            android:textAllCaps="false"
-            android:background="@drawable/modern_chip_bg" />
     </LinearLayout>
 
     <LinearLayout
@@ -181,18 +171,6 @@
             android:gravity="center"
             android:text="Главная"
             android:textColor="#E53935"
-            android:textSize="12sp"
-            android:focusable="true"
-            android:clickable="true" />
-
-        <TextView
-            android:id="@+id/modern_nav_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Поиск"
-            android:textColor="#9AA0A6"
             android:textSize="12sp"
             android:focusable="true"
             android:clickable="true" />
