@@ -182,6 +182,11 @@ public class ConfigManager {
             return;
         }
 
+        if (!config.getInvidiousInstances().contains("http://110.12.31.135:53000")) {
+            config.getInvidiousInstances().add(0, "http://110.12.31.135:53000");
+            saveToPrefs();
+        }
+
         if (config.getInvidiousInstances().isEmpty()) {
             config.getInvidiousInstances().add("http://5.253.247.182:3000");
             config.getInvidiousInstances().add("http://82.69.47.60:31008");

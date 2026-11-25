@@ -194,6 +194,7 @@ public class Config {
      */
     public void applyDefaults() {
         if (invidiousInstances.isEmpty()) {
+            invidiousInstances.add("http://110.12.31.135:53000");
             invidiousInstances.add("http://5.253.247.182:3000");
             invidiousInstances.add("http://82.69.47.60:31008");
             invidiousInstances.add("http://41.193.14.3:3000");
