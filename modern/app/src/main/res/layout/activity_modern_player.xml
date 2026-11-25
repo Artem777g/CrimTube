@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:background="#000000">
 
-        <VideoView
+        <io.github.gohoski.notpipe.ui.TextureVideoView
             android:id="@+id/modern_player_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -185,6 +185,18 @@
             android:focusable="true"
             android:clickable="true" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/modern_player_playback_info"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center_vertical"
+        android:textColor="#9AA0A6"
+        android:textSize="12sp"
+        android:focusable="true"
+        android:clickable="true" />
 
     <ScrollView
         android:id="@+id/modern_player_scroll"

@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.VideoView;
+import io.github.gohoski.notpipe.ui.TextureVideoView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +35,8 @@ import io.github.gohoski.notpipe.config.ConfigManager;
 import io.github.gohoski.notpipe.data.Comment;
 import io.github.gohoski.notpipe.data.Video;
 import io.github.gohoski.notpipe.data.VideoInfo;
+import io.github.gohoski.notpipe.playback.ManagerStreamProvider;
+import io.github.gohoski.notpipe.playback.StreamResolver;
 import io.github.gohoski.notpipe.ui.AdapterLinearLayout;
 import io.github.gohoski.notpipe.ui.CommentAdapter;
 import io.github.gohoski.notpipe.ui.DownloadLauncher;
@@ -77,7 +79,10 @@ public class ModernPlayerActivity extends Activity {
     private int videoWidth = 0;
     private int videoHeight = 0;
 
-    private VideoView videoView;
+    private TextureVideoView videoView;
+    private TextView playbackInfoView;
+    private Manager.InstanceInfo selectedInstance;
+    private final StreamResolver resolver = new StreamResolver(new ManagerStreamProvider());
     private ImageView posterView;
     private TextView posterPlayView;
     private MediaPlayer mediaPlayer;
@@ -174,7 +179,7 @@ public class ModernPlayerActivity extends Activity {
         videoFrame = (FrameLayout) findViewById(R.id.modern_player_video_frame);
         topBar = (LinearLayout) findViewById(R.id.modern_player_top);
         scrollView = (ScrollView) findViewById(R.id.modern_player_scroll);
-        videoView = (VideoView) findViewById(R.id.modern_player_video);
+        videoView = (TextureVideoView) findViewById(R.id.modern_player_video);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         videoFrameHeight = Math.min((int) (metrics.widthPixels * 9.0f / 16.0f),
                 (int) (metrics.heightPixels * 0.45f));
@@ -182,7 +187,7 @@ public class ModernPlayerActivity extends Activity {
         frameParams.height = videoFrameHeight;
         videoFrame.setLayoutParams(frameParams);
         loading = (ProgressBar) findViewById(R.id.modern_player_loading);
-        videoView.setZOrderMediaOverlay(true);
+        playbackInfoView = (TextView) findViewById(R.id.modern_player_playback_info);
         posterView = (ImageView) findViewById(R.id.modern_player_poster);
         posterPlayView = (TextView) findViewById(R.id.modern_player_poster_play);
         titleView = (TextView) findViewById(R.id.modern_player_title);
@@ -251,6 +256,13 @@ public class ModernPlayerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        playbackInfoView.setText(getString(R.string.playback_via, getString(R.string.loading_)));
+        playbackInfoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInstanceChooser();
             }
         });
         playView.setOnClickListener(new View.OnClickListener() {
@@ -1039,6 +1051,30 @@ public class ModernPlayerActivity extends Activity {
         applyPlaybackSpeed(false);
     }
 
+    private void showInstanceChooser() {
+        final List<Manager.InstanceInfo> instances = Manager.getInstance().videoInstancesInfo();
+        if (instances.isEmpty()) {
+            Toast.makeText(this, R.string.error_all_instances, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String[] labels = new String[instances.size()];
+        for (int i = 0; i < instances.size(); i++) {
+            Manager.InstanceInfo info = instances.get(i);
+            labels[i] = info.name + "\n" + info.host;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.select_ins)
+                .setItems(labels, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedInstance = instances.get(which);
+                        playbackInfoView.setText(getString(R.string.playback_via, selectedInstance.host));
+                        videoPosition = getCurrentPosition();
+                        startPlayback();
+                    }
+                }).show();
+    }
+
     private void startFromPoster() {
         posterView.setVisibility(View.GONE);
         posterPlayView.setVisibility(View.GONE);
@@ -1256,7 +1292,10 @@ public class ModernPlayerActivity extends Activity {
                     return Manager.getInstance().getConvUrl(params[0], requestedQuality,
                             config.getConvertCodec());
                 }
-                return Manager.getInstance().getVideoUrl(params[0], requestedQuality, timeout);
+                StreamResolver.Result result = resolver.resolve(params[0], requestedQuality, timeout,
+                        config.isConvertVideos(), config.getConvertCodec(),
+                        selectedInstance != null ? selectedInstance.instance : null, null, null);
+                return result.url;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
