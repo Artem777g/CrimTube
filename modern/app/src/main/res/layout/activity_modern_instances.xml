@@ -156,6 +156,17 @@
         android:layout_weight="1"
         android:layout_marginTop="10dp">
 
+        <Button
+            android:id="@+id/modern_inst_ping"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:text="Пинг / диагностика"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textAllCaps="false"
+            android:background="@drawable/modern_chip_bg" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -89,6 +90,13 @@ public class ModernInstancesActivity extends Activity {
             }
         });
 
+        Button pingButton = (Button) findViewById(R.id.modern_inst_ping);
+        pingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ModernInstancesActivity.this, InstancesActivity.class));
+            }
+        });
         Button saveButton = (Button) findViewById(R.id.modern_inst_save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

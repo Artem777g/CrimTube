@@ -87,7 +87,8 @@ public class TextureVideoView extends FrameLayout {
     private void prepareAsync() {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        if (surfaceReady && surface != null) {
+        ensureSurface();
+        if (surface != null) {
             mediaPlayer.setSurface(surface);
         }
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -97,7 +98,8 @@ public class TextureVideoView extends FrameLayout {
                 videoWidth = mp.getVideoWidth();
                 videoHeight = mp.getVideoHeight();
                 applyTransform();
-                if (surfaceReady && textureView.getSurfaceTexture() != null) {
+                ensureSurface();
+                if (surface != null) {
                     mp.setSurface(surface);
                 }
                 if (preparedListener != null) {
@@ -134,6 +136,13 @@ public class TextureVideoView extends FrameLayout {
             if (errorListener != null) {
                 errorListener.onError(mediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             }
+        }
+    }
+
+    private void ensureSurface() {
+        if (surface == null && textureView != null && textureView.getSurfaceTexture() != null) {
+            surface = new Surface(textureView.getSurfaceTexture());
+            surfaceReady = true;
         }
     }
 

@@ -634,6 +634,7 @@ public class ModernPlayerActivity extends Activity {
         }
 
         populateMeta();
+        playbackInfoView.setText(getString(R.string.playback_via, selectedInstance != null ? selectedInstance.host : "Авто"));
         if (video.thumbnail != null && video.thumbnail.length() > 0) {
             ImageLoader.loadImage(video.thumbnail, posterView);
             posterView.setVisibility(View.VISIBLE);
@@ -978,7 +979,12 @@ public class ModernPlayerActivity extends Activity {
     }
 
     private void startPlayback() {
-        openLegacyPlayer();
+        if (video == null) return;
+        statusView.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
+        Config config = ConfigManager.getInstance().getConfig();
+        streamTask = new StreamTask();
+        streamTask.execute(videoId, quality);
     }
 
     private void openLegacyPlayer() {
@@ -1078,11 +1084,29 @@ public class ModernPlayerActivity extends Activity {
     private void startFromPoster() {
         posterView.setVisibility(View.GONE);
         posterPlayView.setVisibility(View.GONE);
-        openLegacyPlayer();
+        playWhenReady = true;
+        startPlayback();
     }
 
     private void togglePlay() {
-        openLegacyPlayer();
+        if (!videoPrepared) {
+            playWhenReady = true;
+            startPlayback();
+            return;
+        }
+        try {
+            if (videoView.isPlaying()) {
+                videoView.pause();
+                playWhenReady = false;
+                playView.setText(ICON_PLAY);
+            } else {
+                videoView.start();
+                playWhenReady = true;
+                playView.setText(ICON_PAUSE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void togglePlayInternal() {
@@ -1336,12 +1360,15 @@ public class ModernPlayerActivity extends Activity {
     private class CommentsTask extends AsyncTask<String, Void, List<Comment>> {
         @Override
         protected List<Comment> doInBackground(String... params) {
-            try {
-                return Manager.getInstance().getMetadata().getComments(params[0]);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            for (int attempt = 0; attempt < 3; attempt++) {
+                try {
+                    List<Comment> result = Manager.getInstance().getMetadata().getComments(params[0]);
+                    if (result != null && !result.isEmpty()) return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            return null;
         }
 
         @Override
