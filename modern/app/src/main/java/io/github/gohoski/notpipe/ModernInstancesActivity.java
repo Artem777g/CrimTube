@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -15,9 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.gohoski.notpipe.api.Manager;
+import io.github.gohoski.notpipe.http.HttpClient;
+import io.github.gohoski.notpipe.http.HttpRequest;
 import io.github.gohoski.notpipe.config.Config;
 import io.github.gohoski.notpipe.config.ConfigManager;
 
@@ -38,6 +43,8 @@ public class ModernInstancesActivity extends Activity {
 
     private ConfigManager configManager;
     private Config config;
+    private final Map<String, Integer> latencies = new HashMap<String, Integer>();
+    private TextView pingStatus;
     private List<String> instances;
     private int selectedType = TYPE_INVIDIOUS;
 
@@ -90,11 +97,12 @@ public class ModernInstancesActivity extends Activity {
             }
         });
 
+        pingStatus = (TextView) findViewById(R.id.modern_inst_ping_status);
         Button pingButton = (Button) findViewById(R.id.modern_inst_ping);
         pingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernInstancesActivity.this, InstancesActivity.class));
+                startPing();
             }
         });
         Button saveButton = (Button) findViewById(R.id.modern_inst_save);
@@ -145,6 +153,40 @@ public class ModernInstancesActivity extends Activity {
         emptyView.setVisibility(instances.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
+    private void startPing() {
+        if (instances.isEmpty()) return;
+        pingStatus.setText("Проверяю инстансы…");
+        new PingTask().execute();
+    }
+
+    private class PingTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            latencies.clear();
+            for (int i = 0; i < instances.size(); i++) {
+                String url = instances.get(i);
+                String base = url;
+                int comma = base.indexOf(',');
+                if (comma >= 0) base = base.substring(0, comma);
+                if (!base.startsWith("http://") && !base.startsWith("https://")) base = "http://" + base;
+                try {
+                    long start = System.currentTimeMillis();
+                    HttpClient.executeToString(new HttpRequest(base, "/"), 6000);
+                    latencies.put(url, Integer.valueOf((int) (System.currentTimeMillis() - start)));
+                } catch (Exception e) {
+                    latencies.put(url, Integer.valueOf(-1));
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            pingStatus.setText("Пинг завершён");
+            refreshList();
+        }
+    }
+
     private View createRow(final String url) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -164,7 +206,8 @@ public class ModernInstancesActivity extends Activity {
         LinearLayout.LayoutParams addressParams = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
         address.setLayoutParams(addressParams);
-        address.setText(url);
+        Integer latency = latencies.get(url);
+        address.setText(latency == null ? url : (latency.intValue() < 0 ? url + "  ·  нет ответа" : url + "  ·  " + latency + " мс"));
         address.setTextColor(0xFFFFFFFF);
         address.setTextSize(14);
         address.setSingleLine(true);

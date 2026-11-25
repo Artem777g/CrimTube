@@ -167,6 +167,14 @@
             android:textAllCaps="false"
             android:background="@drawable/modern_chip_bg" />
 
+        <TextView
+            android:id="@+id/modern_inst_ping_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#9AA0A6"
+            android:textSize="12sp" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

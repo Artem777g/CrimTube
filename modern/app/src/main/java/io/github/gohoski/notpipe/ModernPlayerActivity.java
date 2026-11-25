@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.gohoski.notpipe.api.Manager;
+import io.github.gohoski.notpipe.api.Metadata;
 import io.github.gohoski.notpipe.config.Config;
 import io.github.gohoski.notpipe.config.ConfigManager;
 import io.github.gohoski.notpipe.data.Comment;
@@ -1360,15 +1361,27 @@ public class ModernPlayerActivity extends Activity {
     private class CommentsTask extends AsyncTask<String, Void, List<Comment>> {
         @Override
         protected List<Comment> doInBackground(String... params) {
+            List<Comment> result = null;
             for (int attempt = 0; attempt < 3; attempt++) {
                 try {
-                    List<Comment> result = Manager.getInstance().getMetadata().getComments(params[0]);
+                    result = Manager.getInstance().getMetadata().getComments(params[0]);
                     if (result != null && !result.isEmpty()) return result;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            return null;
+            List<Manager.InstanceInfo> instances = Manager.getInstance().allInstancesInfo();
+            for (int i = 0; i < instances.size(); i++) {
+                Manager.InstanceInfo info = instances.get(i);
+                if (!info.supportsMetadata || !(info.instance instanceof Metadata)) continue;
+                try {
+                    result = ((Metadata) info.instance).getComments(params[0]);
+                    if (result != null && !result.isEmpty()) return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return result;
         }
 
         @Override
