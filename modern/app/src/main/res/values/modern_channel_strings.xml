@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="modern_channel_back_desc">Назад</string>
+    <string name="modern_channel_subscribed">Вы подписаны</string>
+    <string name="modern_channel_error">Не удалось загрузить канал. Нажмите, чтобы повторить.</string>
+    <string name="modern_channel_videos_error">Не удалось загрузить видео. Нажмите, чтобы повторить.</string>
+</resources>

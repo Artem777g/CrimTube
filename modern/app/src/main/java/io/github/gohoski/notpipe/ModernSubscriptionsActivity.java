@@ -40,7 +40,7 @@ public class ModernSubscriptionsActivity extends Activity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ModernSubscriptionsActivity.this, ChannelActivity.class);
+                Intent intent = new Intent(ModernSubscriptionsActivity.this, ModernChannelActivity.class);
                 intent.putExtra("ID", channels.get(position).id);
                 startActivity(intent);
             }

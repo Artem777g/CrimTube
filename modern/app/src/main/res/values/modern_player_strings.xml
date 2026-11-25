@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Строки современного плеера (ModernPlayerActivity).
+    Вынесены отдельно, чтобы не трогать общий strings.xml.
+-->
+<resources>
+    <string name="modern_player_like">Нравится</string>
+    <string name="modern_player_dislike">Не нравится</string>
+    <string name="modern_player_like_toast">Нравится: %1$s. Отправка лайков без аккаунта YouTube недоступна.</string>
+    <string name="modern_player_like_toast_empty">Отправка лайков без аккаунта YouTube недоступна.</string>
+    <string name="modern_player_dislike_toast">Отправка дизлайков без аккаунта YouTube недоступна.</string>
+    <string name="modern_player_share">Поделиться</string>
+    <string name="modern_player_download">Скачать</string>
+    <string name="modern_player_later_add">Позже</string>
+    <string name="modern_player_later_remove">В «Позже»</string>
+    <string name="modern_player_subscribe">Подписаться</string>
+    <string name="modern_player_subscribed">Вы подписаны</string>
+    <string name="modern_player_subscribed_toast">Вы подписались на %1$s</string>
+    <string name="modern_player_unsubscribed_toast">Вы отписались от %1$s</string>
+    <string name="modern_player_related">Похожие</string>
+    <string name="modern_player_comments">Комментарии</string>
+    <string name="modern_player_no_related">Похожих видео не найдено</string>
+    <string name="modern_player_no_comments">Комментариев не найдено</string>
+    <string name="modern_player_no_description">Нет описания</string>
+    <string name="modern_player_views">%1$s просмотров</string>
+    <string name="modern_player_subscribers">%1$s подписчиков</string>
+    <string name="modern_player_quality_dialog">Качество видео</string>
+    <string name="modern_player_speed_unsupported">Смена скорости воспроизведения не поддерживается на этом устройстве</string>
+    <string name="modern_player_speed_selected">Скорость воспроизведения: %1$s</string>
+    <string name="modern_player_resume">Продолжаем с %1$s</string>
+    <string name="modern_player_channel_unavailable">Не удалось открыть канал: нет данных</string>
+    <string name="modern_player_error_no_quality">Не удалось получить это качество. Попробуйте другое.</string>
+</resources>
