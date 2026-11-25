@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="modern_adv_title">Расширенные настройки</string>
+    <string name="modern_adv_instances_url_hint" translatable="false">http://144.31.189.129/notPipe.json</string>
+    <string name="modern_adv_landscape_desc">При включении видео автоматически поворачивается в ландшафт при переходе в полный экран.</string>
+</resources>

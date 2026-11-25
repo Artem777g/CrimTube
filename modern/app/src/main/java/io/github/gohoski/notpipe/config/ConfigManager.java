@@ -182,6 +182,14 @@ public class ConfigManager {
             return;
         }
 
+        if (config.getInvidiousInstances().isEmpty()) {
+            config.getInvidiousInstances().add("http://5.253.247.182:3000");
+            config.getInvidiousInstances().add("http://82.69.47.60:31008");
+            config.getInvidiousInstances().add("http://41.193.14.3:3000");
+            config.getInvidiousInstances().add("http://73.26.148.72:3000");
+            saveToPrefs();
+        }
+
         if (config.getInvidiousInstances().isEmpty()
                 && config.getPipedInstances().isEmpty()
                 && config.getYtApiLegacyInstances().isEmpty()) {

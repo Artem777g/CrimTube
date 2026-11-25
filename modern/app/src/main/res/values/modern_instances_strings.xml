@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="modern_instances_title">Инстансы</string>
+    <string name="modern_instances_type_label">Тип API</string>
+    <string name="modern_instances_hint">http://адрес-инстанса</string>
+    <string name="modern_instances_add">Добавить</string>
+    <string name="modern_instances_save">Сохранить</string>
+    <string name="modern_instances_empty">Список пуст. Добавьте адрес выше.</string>
+    <string name="modern_instances_added">Адрес добавлен</string>
+    <string name="modern_instances_updated">Адрес изменён</string>
+    <string name="modern_instances_removed">Адрес удалён</string>
+    <string name="modern_instances_saved">Изменения сохранены</string>
+    <string name="modern_instances_edit_title">Изменить адрес</string>
+    <string name="modern_instances_delete_title">Удалить адрес</string>
+    <string name="modern_instances_delete_message">Удалить «%1$s» из списка?</string>
+    <string-array name="modern_instances_types">
+        <item>Invidious</item>
+        <item>yt2009</item>
+        <item>Piped</item>
+        <item>YtApiLegacy</item>
+    </string-array>
+</resources>

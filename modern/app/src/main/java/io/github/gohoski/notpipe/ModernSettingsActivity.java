@@ -24,7 +24,7 @@ public class ModernSettingsActivity extends Activity {
         findViewById(R.id.ms_instances).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModernSettingsActivity.this, InstancesActivity.class));
+                startActivity(new Intent(ModernSettingsActivity.this, ModernInstancesActivity.class));
             }
         });
         findViewById(R.id.ms_updates).setOnClickListener(new View.OnClickListener() {

@@ -59,6 +59,11 @@
             android:theme="@style/ModernTheme"
             android:exported="false" />
         <activity
+            android:name=".ModernInstancesActivity"
+            android:theme="@style/ModernTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false" />
+        <activity
             android:name=".TvMainActivity"
             android:label="@string/app_name"
             android:theme="@style/TvTheme"

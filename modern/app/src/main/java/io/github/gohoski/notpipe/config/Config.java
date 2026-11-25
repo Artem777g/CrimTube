@@ -193,6 +193,12 @@ public class Config {
      * when all instance lists are empty.
      */
     public void applyDefaults() {
+        if (invidiousInstances.isEmpty()) {
+            invidiousInstances.add("http://5.253.247.182:3000");
+            invidiousInstances.add("http://82.69.47.60:31008");
+            invidiousInstances.add("http://41.193.14.3:3000");
+            invidiousInstances.add("http://73.26.148.72:3000");
+        }
         ytApiLegacyInstances.add(DEFAULT_YTAPILEGACY);
 
         updateInstancesFromUrl = true;
